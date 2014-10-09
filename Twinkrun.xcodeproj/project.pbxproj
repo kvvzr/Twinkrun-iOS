@@ -14,6 +14,9 @@
 		8F08D6B619E609720035069C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F08D6B519E609720035069C /* Images.xcassets */; };
 		8F08D6B919E609720035069C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F08D6B719E609720035069C /* LaunchScreen.xib */; };
 		8F08D6C519E609720035069C /* TwinkrunTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6C419E609720035069C /* TwinkrunTests.swift */; };
+		8F08D6D619E613710035069C /* QueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6D519E613710035069C /* QueueTests.swift */; };
+		8F08D6D819E618190035069C /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6D719E618190035069C /* Queue.swift */; };
+		8F08D6D919E61D100035069C /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6D719E618190035069C /* Queue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,8 @@
 		8F08D6BE19E609720035069C /* TwinkrunTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TwinkrunTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F08D6C319E609720035069C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F08D6C419E609720035069C /* TwinkrunTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwinkrunTests.swift; sourceTree = "<group>"; };
+		8F08D6D519E613710035069C /* QueueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueTests.swift; sourceTree = "<group>"; };
+		8F08D6D719E618190035069C /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				8F08D6C419E609720035069C /* TwinkrunTests.swift */,
+				8F08D6D519E613710035069C /* QueueTests.swift */,
 				8F08D6C219E609720035069C /* Supporting Files */,
 			);
 			path = TwinkrunTests;
@@ -164,6 +170,7 @@
 		8F08D6D119E609E70035069C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8F08D6D719E618190035069C /* Queue.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -304,6 +311,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F08D6B119E609720035069C /* ViewController.swift in Sources */,
+				8F08D6D819E618190035069C /* Queue.swift in Sources */,
 				8F08D6AF19E609720035069C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -313,6 +321,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F08D6C519E609720035069C /* TwinkrunTests.swift in Sources */,
+				8F08D6D919E61D100035069C /* Queue.swift in Sources */,
+				8F08D6D619E613710035069C /* QueueTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
