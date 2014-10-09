@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1CF2A0084057E3437E2372A0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8287D9AE1A2BC4E166E6EA08 /* libPods.a */; };
 		8F08D6AF19E609720035069C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6AE19E609720035069C /* AppDelegate.swift */; };
 		8F08D6B119E609720035069C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6B019E609720035069C /* ViewController.swift */; };
 		8F08D6B419E609720035069C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F08D6B219E609720035069C /* Main.storyboard */; };
@@ -26,6 +27,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		12E216E8793FD00A3D9CA456 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		68FBE0071247A5F4A9D3130E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		8287D9AE1A2BC4E166E6EA08 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F08D6A919E609720035069C /* Twinkrun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twinkrun.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F08D6AD19E609720035069C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F08D6AE19E609720035069C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CF2A0084057E3437E2372A0 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,12 +61,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2951FC914194B17D03777E5B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				68FBE0071247A5F4A9D3130E /* Pods.debug.xcconfig */,
+				12E216E8793FD00A3D9CA456 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		34C9EF4A1CDB28C028370497 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8287D9AE1A2BC4E166E6EA08 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8F08D6A019E609720035069C = {
 			isa = PBXGroup;
 			children = (
 				8F08D6AB19E609720035069C /* Twinkrun */,
 				8F08D6C119E609720035069C /* TwinkrunTests */,
 				8F08D6AA19E609720035069C /* Products */,
+				2951FC914194B17D03777E5B /* Pods */,
+				34C9EF4A1CDB28C028370497 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,8 +102,11 @@
 			isa = PBXGroup;
 			children = (
 				8F08D6AE19E609720035069C /* AppDelegate.swift */,
-				8F08D6B019E609720035069C /* ViewController.swift */,
 				8F08D6B219E609720035069C /* Main.storyboard */,
+				8F08D6D119E609E70035069C /* Models */,
+				8F08D6D019E609E20035069C /* Controllers */,
+				8F08D6CF19E609D50035069C /* Sounds */,
+				8F08D6CE19E609CF0035069C /* Videos */,
 				8F08D6B519E609720035069C /* Images.xcassets */,
 				8F08D6B719E609720035069C /* LaunchScreen.xib */,
 				8F08D6AC19E609720035069C /* Supporting Files */,
@@ -112,6 +139,35 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		8F08D6CE19E609CF0035069C /* Videos */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Videos;
+			sourceTree = "<group>";
+		};
+		8F08D6CF19E609D50035069C /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
+		8F08D6D019E609E20035069C /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8F08D6B019E609720035069C /* ViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		8F08D6D119E609E70035069C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -119,9 +175,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8F08D6C819E609720035069C /* Build configuration list for PBXNativeTarget "Twinkrun" */;
 			buildPhases = (
+				643F84713BA4B7B1639CA268 /* Check Pods Manifest.lock */,
 				8F08D6A519E609720035069C /* Sources */,
 				8F08D6A619E609720035069C /* Frameworks */,
 				8F08D6A719E609720035069C /* Resources */,
+				070658C5A4A55A9134D75A3B /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -206,6 +264,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		070658C5A4A55A9134D75A3B /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		643F84713BA4B7B1639CA268 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8F08D6A519E609720035069C /* Sources */ = {
@@ -334,6 +425,7 @@
 		};
 		8F08D6C919E609720035069C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 68FBE0071247A5F4A9D3130E /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Twinkrun/Info.plist;
@@ -344,6 +436,7 @@
 		};
 		8F08D6CA19E609720035069C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 12E216E8793FD00A3D9CA456 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Twinkrun/Info.plist;
@@ -405,6 +498,7 @@
 				8F08D6CA19E609720035069C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8F08D6CB19E609720035069C /* Build configuration list for PBXNativeTarget "TwinkrunTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +507,7 @@
 				8F08D6CD19E609720035069C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

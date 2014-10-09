@@ -1,0 +1,19 @@
+PODS:
+  - AnimatedGIFImageSerialization (0.2.0)
+  - Canvas (0.1.2)
+  - ObjectAL-for-iPhone (2.4)
+  - VTAcknowledgementsViewController (0.12)
+
+DEPENDENCIES:
+  - AnimatedGIFImageSerialization
+  - Canvas
+  - ObjectAL-for-iPhone
+  - VTAcknowledgementsViewController
+
+SPEC CHECKSUMS:
+  AnimatedGIFImageSerialization: ee2b8f04ec1143dd196cac160a7b119753891825
+  Canvas: ae2faca05a15c4d6659fb3ae5e2a14817df4449a
+  ObjectAL-for-iPhone: 305e0d4548ed5897eab08a6e1cc1f6589213cc28
+  VTAcknowledgementsViewController: 5cdab8f3d003680b8fbdfcce90fcab92cee962a6
+
+COCOAPODS: 0.34.2
