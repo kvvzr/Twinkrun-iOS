@@ -1,5 +1,5 @@
 //
-//  QueueTests.swift
+//  ArrayTests.swift
 //  Twinkrun
 //
 //  Created by Kawazure on 2014/10/09.
@@ -9,7 +9,7 @@
 import UIKit
 import XCTest
 
-class QueueTests: XCTestCase {
+class ArrayTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
@@ -23,7 +23,7 @@ class QueueTests: XCTestCase {
 
     func testQueue() {
         var queue = [1]
-        queue.enqueue(2)
+        queue.append(2)
         XCTAssertEqual(queue, [1, 2])
         
         var one = queue.dequeue()!
