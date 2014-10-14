@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		1CF2A0084057E3437E2372A0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8287D9AE1A2BC4E166E6EA08 /* libPods.a */; };
 		8F08D6AF19E609720035069C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6AE19E609720035069C /* AppDelegate.swift */; };
-		8F08D6B119E609720035069C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6B019E609720035069C /* ViewController.swift */; };
+		8F08D6B119E609720035069C /* TitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6B019E609720035069C /* TitleViewController.swift */; };
 		8F08D6B419E609720035069C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F08D6B219E609720035069C /* Main.storyboard */; };
 		8F08D6B619E609720035069C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F08D6B519E609720035069C /* Images.xcassets */; };
 		8F08D6B919E609720035069C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F08D6B719E609720035069C /* LaunchScreen.xib */; };
@@ -22,6 +22,7 @@
 		8F08D6DF19E621A80035069C /* TWRResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6DE19E621A80035069C /* TWRResult.swift */; };
 		8F08D6E119E621BE0035069C /* TWRGameOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6E019E621BE0035069C /* TWRGameOption.swift */; };
 		8F08D6E319E6311A0035069C /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F08D6E219E6311A0035069C /* CoreBluetooth.framework */; };
+		8F186D1119ED304300D4FB04 /* PlayerSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F186D1019ED304300D4FB04 /* PlayerSelectViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +42,7 @@
 		8F08D6A919E609720035069C /* Twinkrun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twinkrun.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F08D6AD19E609720035069C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F08D6AE19E609720035069C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8F08D6B019E609720035069C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		8F08D6B019E609720035069C /* TitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleViewController.swift; sourceTree = "<group>"; };
 		8F08D6B319E609720035069C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8F08D6B519E609720035069C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8F08D6B819E609720035069C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -55,6 +56,7 @@
 		8F08D6DE19E621A80035069C /* TWRResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWRResult.swift; sourceTree = "<group>"; };
 		8F08D6E019E621BE0035069C /* TWRGameOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWRGameOption.swift; sourceTree = "<group>"; };
 		8F08D6E219E6311A0035069C /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		8F186D1019ED304300D4FB04 /* PlayerSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerSelectViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,7 +176,8 @@
 		8F08D6D019E609E20035069C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				8F08D6B019E609720035069C /* ViewController.swift */,
+				8F08D6B019E609720035069C /* TitleViewController.swift */,
+				8F186D1019ED304300D4FB04 /* PlayerSelectViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 				TargetAttributes = {
 					8F08D6A819E609720035069C = {
 						CreatedOnToolsVersion = 6.0.1;
+						DevelopmentTeam = 8L9388RP45;
 					};
 					8F08D6BD19E609720035069C = {
 						CreatedOnToolsVersion = 6.0.1;
@@ -327,11 +331,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F08D6DF19E621A80035069C /* TWRResult.swift in Sources */,
-				8F08D6B119E609720035069C /* ViewController.swift in Sources */,
+				8F08D6B119E609720035069C /* TitleViewController.swift in Sources */,
 				8F08D6D819E618190035069C /* ArrayExtension.swift in Sources */,
 				8F08D6AF19E609720035069C /* AppDelegate.swift in Sources */,
 				8F08D6DB19E621770035069C /* TWRGame.swift in Sources */,
 				8F08D6E119E621BE0035069C /* TWRGameOption.swift in Sources */,
+				8F186D1119ED304300D4FB04 /* PlayerSelectViewController.swift in Sources */,
 				8F08D6DD19E621970035069C /* TWRPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -458,9 +463,13 @@
 			baseConfigurationReference = 68FBE0071247A5F4A9D3130E /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Twinkrun/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -469,9 +478,13 @@
 			baseConfigurationReference = 12E216E8793FD00A3D9CA456 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Twinkrun/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

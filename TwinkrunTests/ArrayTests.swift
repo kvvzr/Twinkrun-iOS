@@ -35,6 +35,12 @@ class ArrayTests: XCTestCase {
         queue.dequeue()
         XCTAssertEqual(queue, [])
     }
+    
+    func testShuffle() {
+        var arr = [1, 2, 3]
+        arr.shuffle()
+        XCTAssertNotNil(arr)
+    }
 
     func testPerformanceExample() {
         // This is an example of a performance test case.

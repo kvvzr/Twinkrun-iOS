@@ -22,6 +22,30 @@ class TWRColor: Hashable {
         self.score = score
     }
     
+    class func red() -> TWRColor {
+        return TWRColor(
+            name: "Red",
+            color: UIColor(red: CGFloat(1), green: CGFloat(0.255), blue: CGFloat(0.2), alpha: CGFloat(1)),
+            count: 0, time: 0, score: 0
+        )
+    }
+    
+    class func green() -> TWRColor {
+        return TWRColor(
+            name: "Green",
+            color: UIColor(red: CGFloat(0), green: CGFloat(0.81), blue: CGFloat(0.686), alpha: CGFloat(1)),
+            count: 0, time: 0, score: 0
+        )
+    }
+    
+    class func black() -> TWRColor {
+        return TWRColor(
+            name: "Black",
+            color: UIColor(red: CGFloat(0.2), green: CGFloat(0.204), blue: CGFloat(0.22), alpha: CGFloat(1)),
+            count: 0, time: 0, score: 0
+        )
+    }
+    
     class func red(#count: UInt, time: UInt, score: Float) -> TWRColor {
         return TWRColor(
             name: "Red",
