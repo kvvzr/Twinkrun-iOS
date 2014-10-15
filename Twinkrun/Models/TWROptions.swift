@@ -1,5 +1,5 @@
 //
-//  TWRGameOption.swift
+//  TWROptions.swift
 //  Twinkrun
 //
 //  Created by Kawazure on 2014/10/09.

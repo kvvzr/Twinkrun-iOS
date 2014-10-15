@@ -20,7 +20,7 @@
 		8F08D6DB19E621770035069C /* TWRGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6DA19E621770035069C /* TWRGame.swift */; };
 		8F08D6DD19E621970035069C /* TWRPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6DC19E621970035069C /* TWRPlayer.swift */; };
 		8F08D6DF19E621A80035069C /* TWRResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6DE19E621A80035069C /* TWRResult.swift */; };
-		8F08D6E119E621BE0035069C /* TWRGameOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6E019E621BE0035069C /* TWRGameOption.swift */; };
+		8F08D6E119E621BE0035069C /* TWROptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6E019E621BE0035069C /* TWROptions.swift */; };
 		8F08D6E319E6311A0035069C /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F08D6E219E6311A0035069C /* CoreBluetooth.framework */; };
 		8F186D1119ED304300D4FB04 /* PlayerSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F186D1019ED304300D4FB04 /* PlayerSelectViewController.swift */; };
 /* End PBXBuildFile section */
@@ -54,7 +54,7 @@
 		8F08D6DA19E621770035069C /* TWRGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWRGame.swift; sourceTree = "<group>"; };
 		8F08D6DC19E621970035069C /* TWRPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWRPlayer.swift; sourceTree = "<group>"; };
 		8F08D6DE19E621A80035069C /* TWRResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWRResult.swift; sourceTree = "<group>"; };
-		8F08D6E019E621BE0035069C /* TWRGameOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWRGameOption.swift; sourceTree = "<group>"; };
+		8F08D6E019E621BE0035069C /* TWROptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWROptions.swift; sourceTree = "<group>"; };
 		8F08D6E219E6311A0035069C /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		8F186D1019ED304300D4FB04 /* PlayerSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerSelectViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -189,7 +189,7 @@
 				8F08D6DA19E621770035069C /* TWRGame.swift */,
 				8F08D6DC19E621970035069C /* TWRPlayer.swift */,
 				8F08D6DE19E621A80035069C /* TWRResult.swift */,
-				8F08D6E019E621BE0035069C /* TWRGameOption.swift */,
+				8F08D6E019E621BE0035069C /* TWROptions.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -335,7 +335,7 @@
 				8F08D6D819E618190035069C /* ArrayExtension.swift in Sources */,
 				8F08D6AF19E609720035069C /* AppDelegate.swift in Sources */,
 				8F08D6DB19E621770035069C /* TWRGame.swift in Sources */,
-				8F08D6E119E621BE0035069C /* TWRGameOption.swift in Sources */,
+				8F08D6E119E621BE0035069C /* TWROptions.swift in Sources */,
 				8F186D1119ED304300D4FB04 /* PlayerSelectViewController.swift in Sources */,
 				8F08D6DD19E621970035069C /* TWRPlayer.swift in Sources */,
 			);
