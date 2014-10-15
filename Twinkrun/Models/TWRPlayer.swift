@@ -14,61 +14,61 @@ class TWRPlayer {
     var playWith: Bool, countedScore: Bool
     var playerName: NSString
     var colorSeed: UInt32, RSSI: Int?
-    var colors: [TWRColor]?
+    var roles: [TWRRole]?
     var option: TWRGameOption
     
-    init(playerName: NSString, identifier: NSUUID, colorSeed: UInt32, option: TWRGameOption) {
+    init(playerName: NSString, identifier: NSUUID, colorSeed: UInt32) {
         self.playerName = playerName
         self.identifier = identifier
         self.colorSeed = colorSeed
-        self.option = option
+        self.option = TWROption.sharedInstance.gameOption
         
         playWith = true
         countedScore = false
         
-        createColorList()
+        createRoleList()
     }
     
-    init(advertisementData: Dictionary<NSObject, Any>, identifier: NSUUID, option: TWRGameOption) {
+    init(advertisementData: Dictionary<NSObject, Any>, identifier: NSUUID) {
         var data: [String] = (advertisementData["kCBAdvDataLocalName"] as String).componentsSeparatedByString(",")
         
         self.playerName = data[0]
         self.colorSeed = UInt32(data[1].toInt()!)
         self.identifier = identifier
-        self.option = option
+        self.option = TWROption.sharedInstance.gameOption
         
         playWith = true
         countedScore = true
     }
     
-    func createColorList() {
-        colors = []
+    func createRoleList() {
+        roles = []
         
-        for color in option.colors {
-            for i in 0 ..< color.count {
-                colors!.append(color)
+        for role in option.roles {
+            for i in 0 ..< role.count {
+                roles!.append(role)
             }
         }
         
-        colors!.shuffle(colorSeed)
+        roles!.shuffle(colorSeed)
     }
     
-    func advertisementData(UUID: CBUUID) -> Dictionary<NSObject, Any> {
+    func advertisementData(UUID: CBUUID) -> Dictionary<NSObject, AnyObject> {
         return [
             CBAdvertisementDataServiceUUIDsKey: [UUID],
             CBAdvertisementDataLocalNameKey: splitString(playerName, bytes: 12) + String(colorSeed)
         ]
     }
     
-    func currentColor(second: UInt) -> TWRColor {
+    func currentRole(second: UInt) -> TWRRole {
         var sec = second % option.gameTime()
         var progress: UInt = 0
-        var current: TWRColor?
+        var current: TWRRole?
         
-        for color in colors! {
-            progress += color.time
+        for role in roles! {
+            progress += role.time
             if sec > progress {
-                current = color
+                current = role
                 break
             }
         }

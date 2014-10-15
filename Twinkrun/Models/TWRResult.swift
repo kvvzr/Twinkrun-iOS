@@ -11,13 +11,15 @@ import Foundation
 class TWRResult {
     let player: TWRPlayer
     let others: [TWRPlayer]
-    let scores: [(TWRColor, [Int])]
+    let scores: [(TWRRole, [Int])]
     let score: Int
+    let option: TWRGameOption
     
-    init(player: TWRPlayer, others: [TWRPlayer], scores: [(TWRColor, [Int])], score: Int) {
+    init(player: TWRPlayer, others: [TWRPlayer], scores: [(TWRRole, [Int])], score: Int, option: TWRGameOption) {
         self.player = player
         self.others = others
         self.scores = scores
         self.score = score
+        self.option = option
     }
 }

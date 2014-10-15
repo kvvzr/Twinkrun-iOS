@@ -20,7 +20,7 @@ protocol TWRGameDelegate {
     func didStartGame(game: TWRGame)
     func didUpdateScore(game: TWRGame)
     func didFlash(game: TWRGame)
-    func didUpdateColor(game: TWRGame)
+    func didUpdateRole(game: TWRGame)
     func didEndGame(game: TWRGame)
 }
 
@@ -30,21 +30,21 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
     let option: TWRGameOption
     var state = TWRGameState.Idle
     
-    var transition: Array<(color: TWRColor, scores: [Int])>?, currentTransition: [Int]?
+    var transition: Array<(role: TWRRole, scores: [Int])>?, currentTransition: [Int]?
     var score: Int, addScore: Int, flashCount: UInt?, countDown: UInt?
     
     var startTime: NSDate?
-    var scanTimer: NSTimer?, updateColorTimer: NSTimer?, updateScoreTimer: NSTimer?, flashTimer: NSTimer?, gameTimer: NSTimer?
+    var scanTimer: NSTimer?, updateRoleTimer: NSTimer?, updateScoreTimer: NSTimer?, flashTimer: NSTimer?, gameTimer: NSTimer?
     
     var centralManager: CBCentralManager
     var peripheralManager: CBPeripheralManager
     
     var delegate: TWRGameDelegate?
     
-    init(player: TWRPlayer, others: [TWRPlayer], option: TWRGameOption, central: CBCentralManager, peripheral: CBPeripheralManager) {
+    init(player: TWRPlayer, others: [TWRPlayer], central: CBCentralManager, peripheral: CBPeripheralManager) {
         self.player = player
         self.others = others
-        self.option = option
+        self.option = TWROption.sharedInstance.gameOption
         self.centralManager = central
         self.peripheralManager = peripheral
         
@@ -74,16 +74,16 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
             
             state = TWRGameState.Stated
             delegate?.didStartGame(self)
-            delegate?.didUpdateColor(self)
+            delegate?.didUpdateRole(self)
             startTime = NSDate()
             var current = UInt(NSDate().timeIntervalSinceDate(startTime!) / 1000)
             
-            updateColorTimer = NSTimer(timeInterval: Double(player.currentColor(current).time), target: self, selector: "updateColor", userInfo: nil, repeats: true)
+            updateRoleTimer = NSTimer(timeInterval: Double(player.currentRole(current).time), target: self, selector: "updateRole", userInfo: nil, repeats: true)
             updateScoreTimer = NSTimer(timeInterval: Double(option.scanInterval), target: self, selector: "updateScore", userInfo: nil, repeats: true)
-            flashTimer = NSTimer(timeInterval: Double(option.flashStartTime(player.currentColor(current).time)), target: self, selector: "flash", userInfo: nil, repeats: true)
+            flashTimer = NSTimer(timeInterval: Double(option.flashStartTime(player.currentRole(current).time)), target: self, selector: "flash", userInfo: nil, repeats: true)
             gameTimer = NSTimer(timeInterval: Double(option.gameTime()), target: self, selector: "end", userInfo: nil, repeats: true)
             
-            NSRunLoop.mainRunLoop().addTimer(updateColorTimer!, forMode: NSRunLoopCommonModes)
+            NSRunLoop.mainRunLoop().addTimer(updateRoleTimer!, forMode: NSRunLoopCommonModes)
             NSRunLoop.mainRunLoop().addTimer(updateScoreTimer!, forMode: NSRunLoopCommonModes)
             NSRunLoop.mainRunLoop().addTimer(flashTimer!, forMode: NSRunLoopCommonModes)
             NSRunLoop.mainRunLoop().addTimer(gameTimer!, forMode: NSRunLoopCommonModes)
@@ -92,19 +92,19 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
         --countDown!
     }
     
-    func updateColor(timer: NSTimer) {
+    func updateRole(timer: NSTimer) {
         var current = UInt(NSDate().timeIntervalSinceDate(startTime!) / 1000)
-        transition! += [(color: player.currentColor(current), scores: currentTransition!)]
+        transition! += [(role: player.currentRole(current), scores: currentTransition!)]
         
         flashCount = 0
         currentTransition = []
         
-        delegate?.didUpdateColor(self)
+        delegate?.didUpdateRole(self)
         
-        updateColorTimer = NSTimer(timeInterval: Double(player.currentColor(current).time), target: self, selector: "updateColor", userInfo: nil, repeats: true)
-        NSRunLoop.mainRunLoop().addTimer(updateColorTimer!, forMode: NSRunLoopCommonModes)
+        updateRoleTimer = NSTimer(timeInterval: Double(player.currentRole(current).time), target: self, selector: "updateRole", userInfo: nil, repeats: true)
+        NSRunLoop.mainRunLoop().addTimer(updateRoleTimer!, forMode: NSRunLoopCommonModes)
         
-        flashTimer = NSTimer(timeInterval: Double(option.flashStartTime(player.currentColor(current).time)), target: self, selector: "flash", userInfo: nil, repeats: true)
+        flashTimer = NSTimer(timeInterval: Double(option.flashStartTime(player.currentRole(current).time)), target: self, selector: "flash", userInfo: nil, repeats: true)
         NSRunLoop.mainRunLoop().addTimer(flashTimer!, forMode: NSRunLoopCommonModes)
     }
     
@@ -131,7 +131,7 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
     
     func end() {
         scanTimer?.invalidate()
-        updateColorTimer?.invalidate()
+        updateRoleTimer?.invalidate()
         updateScoreTimer?.invalidate()
         flashTimer?.invalidate()
         gameTimer?.invalidate()
@@ -144,15 +144,15 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
     
     func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
         var current = UInt(NSDate().timeIntervalSinceDate(startTime!) / 1000)
-        var findPlayer = TWRPlayer(advertisementData: advertisementData, identifier: peripheral.identifier, option: option)
+        var findPlayer = TWRPlayer(advertisementData: advertisementData, identifier: peripheral.identifier)
         
         var other = others.filter { $0 == findPlayer }
         if !other.isEmpty {
             other[0].RSSI = RSSI.integerValue;
             
             if other[0].playWith && !other[0].countedScore {
-                addScore -= Int(/**/ player.currentColor(current).score)
-                addScore += Int(/*TODO： 距離によってスコアを変える */ other[0].currentColor(current).score)
+                addScore -= Int(/**/ player.currentRole(current).score)
+                addScore += Int(/*TODO： 距離によってスコアを変える */ other[0].currentRole(current).score)
             }
         }
         

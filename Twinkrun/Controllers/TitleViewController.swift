@@ -25,7 +25,7 @@ class TitleViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        navigationController!.navigationBar.barTintColor = TWRColor.green().color
+        navigationController!.navigationBar.barTintColor = UIColor.twinkrunGreen()
         navigationController!.navigationBar.titleTextAttributes = [
             NSForegroundColorAttributeName: UIColor.whiteColor(),
             NSFontAttributeName: UIFont(name: "HelveticaNeue-Light", size: 22)
