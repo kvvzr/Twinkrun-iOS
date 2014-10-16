@@ -10,6 +10,7 @@ import UIKit
 import CoreBluetooth
 
 class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
+    @IBOutlet weak var readyButton: UIBarButtonItem!
     var player: TWRPlayer?
     var others: [TWRPlayer]?
     var centralManager: CBCentralManager?
@@ -34,6 +35,7 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
         peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
         option = TWROption.sharedInstance
         
+        player = TWRPlayer(playerName: option!.playerName, identifier: nil, colorSeed: arc4random())
         others = []
         brightness = UIScreen.mainScreen().brightness
         
@@ -42,6 +44,7 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
         tableView.backgroundView = nil
         tableView.backgroundColor = UIColor.twinkrunBlack()
         tableView.tableFooterView = UIView(frame: CGRectZero)
+        tableView.separatorInset = UIEdgeInsetsZero
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -66,9 +69,40 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
         return others!.count
     }
     
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 48
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if tableView.respondsToSelector(Selector("separatorInset")) {
+            tableView.separatorInset = UIEdgeInsetsZero
+        }
+        if tableView.respondsToSelector(Selector("layoutMargins")) {
+            tableView.layoutMargins = UIEdgeInsetsZero
+        }
+        if cell.respondsToSelector(Selector("separatorInset")) {
+            cell.separatorInset = UIEdgeInsetsZero
+        }
+        if cell.respondsToSelector(Selector("layoutMargins")) {
+            cell.layoutMargins = UIEdgeInsetsZero
+        }
+    }
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        readyButton.enabled = false
+        for other in others! {
+            if other.playWith {
+                self.readyButton.enabled = true
+                break
+            }
+        }
+        
         var cell = tableView.dequeueReusableCellWithIdentifier("playerCell") as UITableViewCell
         var other = others![indexPath.row]
+        
+        cell.backgroundColor = UIColor.twinkrunBlack()
+        cell.textLabel!.textColor = UIColor.whiteColor()
+        cell.textLabel!.text = other.playerName
         cell.accessoryType = other.playWith ? .Checkmark : .None
         return cell
     }

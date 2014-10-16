@@ -10,17 +10,17 @@ import Foundation
 import CoreBluetooth
 
 class TWRPlayer {
-    let identifier: NSUUID
+    let identifier: NSUUID?
     var playWith: Bool, countedScore: Bool
     var playerName: NSString
     var colorSeed: UInt32, RSSI: Int?
     var roles: [TWRRole]?
     var option: TWRGameOption
     
-    init(playerName: NSString, identifier: NSUUID, colorSeed: UInt32) {
+    init(playerName: NSString, identifier: NSUUID?, colorSeed: UInt32) {
         self.playerName = playerName
         self.identifier = identifier
-        self.colorSeed = colorSeed
+        self.colorSeed = colorSeed % 1024
         self.option = TWROption.sharedInstance.gameOption
         
         playWith = true
@@ -29,8 +29,8 @@ class TWRPlayer {
         createRoleList()
     }
     
-    init(advertisementData: Dictionary<NSObject, Any>, identifier: NSUUID) {
-        var data: [String] = (advertisementData["kCBAdvDataLocalName"] as String).componentsSeparatedByString(",")
+    init(advertisementData: [NSObject: AnyObject], identifier: NSUUID) {
+        var data: [String] = (advertisementData["kCBAdvDataLocalName"]! as String).componentsSeparatedByString(",")
         
         self.playerName = data[0]
         self.colorSeed = UInt32(data[1].toInt()!)
@@ -56,7 +56,7 @@ class TWRPlayer {
     func advertisementData(UUID: CBUUID) -> Dictionary<NSObject, AnyObject> {
         return [
             CBAdvertisementDataServiceUUIDsKey: [UUID],
-            CBAdvertisementDataLocalNameKey: splitString(playerName, bytes: 12) + String(colorSeed)
+            CBAdvertisementDataLocalNameKey: splitString(playerName, bytes: 12) + "," + String(colorSeed)
         ]
     }
     
