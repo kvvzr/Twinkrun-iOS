@@ -76,6 +76,22 @@ class TWRPlayer {
         return current!
     }
     
+    func nextRole(second: UInt) -> TWRRole? {
+        var sec = second % option.gameTime()
+        var progress: UInt = 0
+        var next: TWRRole?
+        
+        for role in roles! {
+            progress += role.time
+            if sec >= progress {
+                next = role
+                break
+            }
+        }
+        
+        return next
+    }
+    
     private func splitString(input: NSString, bytes length: Int) -> NSString {
         var data = input.dataUsingEncoding(NSUTF8StringEncoding)
         

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import CoreBluetooth
 
 enum TWRGameState {
@@ -17,11 +18,11 @@ enum TWRGameState {
 
 protocol TWRGameDelegate {
     func didUpdateCountDown(count: UInt)
-    func didStartGame(game: TWRGame)
-    func didUpdateScore(game: TWRGame)
-    func didFlash(game: TWRGame)
-    func didUpdateRole(game: TWRGame)
-    func didEndGame(game: TWRGame)
+    func didStartGame()
+    func didUpdateScore(score: Int)
+    func didFlash(color: UIColor)
+    func didUpdateRole(color: UIColor, score: Int)
+    func didEndGame()
 }
 
 class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
@@ -73,15 +74,17 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
             timer.invalidate()
             
             state = TWRGameState.Stated
-            delegate?.didStartGame(self)
-            delegate?.didUpdateRole(self)
+            delegate?.didStartGame()
+            
             startTime = NSDate()
             var current = UInt(NSDate().timeIntervalSinceDate(startTime!) / 1000)
             
+            delegate?.didUpdateRole(player.currentRole(current).color, score: score)
+            
             updateRoleTimer = NSTimer(timeInterval: Double(player.currentRole(current).time), target: self, selector: "updateRole", userInfo: nil, repeats: true)
             updateScoreTimer = NSTimer(timeInterval: Double(option.scanInterval), target: self, selector: "updateScore", userInfo: nil, repeats: true)
-            flashTimer = NSTimer(timeInterval: Double(option.flashStartTime(player.currentRole(current).time)), target: self, selector: "flash", userInfo: nil, repeats: true)
-            gameTimer = NSTimer(timeInterval: Double(option.gameTime()), target: self, selector: "end", userInfo: nil, repeats: true)
+            flashTimer = NSTimer(timeInterval: Double(option.flashStartTime(player.currentRole(current).time)), target: self, selector: "flash", userInfo: nil, repeats: false)
+            gameTimer = NSTimer(timeInterval: Double(option.gameTime()), target: self, selector: "end", userInfo: nil, repeats: false)
             
             NSRunLoop.mainRunLoop().addTimer(updateRoleTimer!, forMode: NSRunLoopCommonModes)
             NSRunLoop.mainRunLoop().addTimer(updateScoreTimer!, forMode: NSRunLoopCommonModes)
@@ -99,12 +102,12 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
         flashCount = 0
         currentTransition = []
         
-        delegate?.didUpdateRole(self)
+        delegate?.didUpdateRole(player.currentRole(current).color, score: score)
         
         updateRoleTimer = NSTimer(timeInterval: Double(player.currentRole(current).time), target: self, selector: "updateRole", userInfo: nil, repeats: true)
         NSRunLoop.mainRunLoop().addTimer(updateRoleTimer!, forMode: NSRunLoopCommonModes)
         
-        flashTimer = NSTimer(timeInterval: Double(option.flashStartTime(player.currentRole(current).time)), target: self, selector: "flash", userInfo: nil, repeats: true)
+        flashTimer = NSTimer(timeInterval: Double(option.flashStartTime(player.currentRole(current).time)), target: self, selector: "flash", userInfo: nil, repeats: false)
         NSRunLoop.mainRunLoop().addTimer(flashTimer!, forMode: NSRunLoopCommonModes)
     }
     
@@ -116,13 +119,15 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
             player.countedScore = false
         }
         
-        delegate?.didUpdateScore(self)
+        delegate?.didUpdateScore(score)
     }
     
     func flash(timer: NSTimer) {
         if (flashCount < option.flashCount) {
-            delegate?.didFlash(self)
-            self.flashTimer = NSTimer(timeInterval: Double(option.flashInterval()), target: self, selector: "flash", userInfo: nil, repeats: true)
+            var current = UInt(NSDate().timeIntervalSinceDate(startTime!) / 1000)
+            var nextRole = player.nextRole(current)
+            delegate?.didFlash((nextRole != nil || flashCount! % 2 == 0 ? player.currentRole(current) : nextRole!).color)
+            self.flashTimer = NSTimer(timeInterval: Double(option.flashInterval()), target: self, selector: "flash", userInfo: nil, repeats: false)
             NSRunLoop.mainRunLoop().addTimer(flashTimer!, forMode: NSRunLoopCommonModes)
         }
         
@@ -139,7 +144,7 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
     
     func end(timer: NSTimer) {
         end()
-        delegate?.didEndGame(self)
+        delegate?.didEndGame()
     }
     
     func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
