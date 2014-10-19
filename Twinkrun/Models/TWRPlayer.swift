@@ -61,6 +61,9 @@ class TWRPlayer {
     }
     
     func currentRole(second: UInt) -> TWRRole {
+        if(roles == nil) {
+            createRoleList()
+        }
         var sec = second % option.gameTime()
         var progress: UInt = 0
         var current: TWRRole?
