@@ -9,7 +9,7 @@
 import Foundation
 import CoreBluetooth
 
-class TWRPlayer {
+class TWRPlayer : Equatable {
     let identifier: NSUUID?
     var playWith: Bool, countedScore: Bool
     var playerName: NSString
