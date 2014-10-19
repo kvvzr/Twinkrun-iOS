@@ -22,17 +22,22 @@ class TWRPlayerTest: XCTestCase {
         super.tearDown()
     }
 
-    func testExample() {
+    func testPlayer() {
         var option = TWROption.sharedInstance.gameOption
         var player = TWRPlayer(playerName: "mactkg", identifier: nil, colorSeed:1024)
-        player.createRoleList()
         
         XCTAssertNotNil(player, "playerある")
         XCTAssertEqual(player.playerName, "mactkg", "指定した名前になってる")
         XCTAssertTrue(player.colorSeed < 1024, "colorSeedは1024未満")
-        XCTAssertTrue(player.currentRole(0 % option.gameTime()).dynamicType === TWRRole.self, "TWRRoleが返ってくる")
-        XCTAssertTrue(player.currentRole(8 % option.gameTime()).dynamicType === TWRRole.self, "TWRRoleが返ってくる")
-        XCTAssertTrue(player.currentRole(option.gameTime()).dynamicType === TWRRole.self, "TWRRoleが返ってくる")
+       
+        XCTAssertNotNil(player.currentRole(0), "ちゃんと現在の色が返ってくる")
+        XCTAssertNotNil(player.currentRole(16), "ちゃんと現在の色が返ってくる")
+        XCTAssertNotNil(player.currentRole(option.gameTime()), "ちゃんと現在の色が返ってくる")
+    
+        XCTAssertNotNil(player.nextRole(0), "ちゃんと次の色が返ってくる")
+        XCTAssert(player.nextRole(0) == player.currentRole(3), "ちゃんと次の色が返ってくる")
+        XCTAssert(player.nextRole(5) == player.currentRole(8), "ちゃんと次の色が返ってくる")
+        XCTAssertNil(player.nextRole(option.gameTime()-3), "次がおしまいの時はnilが返ってくる")
     }
 
     func testPerformanceExample() {

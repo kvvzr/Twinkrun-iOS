@@ -69,30 +69,29 @@ class TWRPlayer {
         var current: TWRRole?
         
         for role in roles! {
-            progress += role.time
-            if sec > progress {
+            let nextLimit = progress + role.time
+            if nextLimit > sec {
                 current = role
                 break
             }
+            progress = nextLimit
         }
         
         return current!
     }
     
     func nextRole(second: UInt) -> TWRRole? {
-        var sec = second % option.gameTime()
         var progress: UInt = 0
-        var next: TWRRole?
-        
-        for role in roles! {
-            progress += role.time
-            if sec >= progress {
-                next = role
-                break
+       
+        for(var i = 0; i < roles!.count-1; i++) {
+            let nextLimit = progress + roles![i].time
+            if nextLimit > second {
+                return roles![i+1]
             }
+            progress = nextLimit
         }
         
-        return next
+        return nil
     }
     
     private func splitString(input: NSString, bytes length: Int) -> NSString {
