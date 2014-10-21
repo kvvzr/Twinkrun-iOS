@@ -36,10 +36,12 @@ class ArrayTests: XCTestCase {
         XCTAssertEqual(queue, [])
     }
     
-    func testShuffle() {
+    func testSeedShuffle() {
         var arr = [1, 2, 3]
-        arr.shuffle()
-        XCTAssertNotNil(arr)
+        var arr2 = arr
+        arr.shuffle(10)
+        arr2.shuffle(10)
+        XCTAssertEqual(arr, arr2)
     }
 
     func testPerformanceExample() {
