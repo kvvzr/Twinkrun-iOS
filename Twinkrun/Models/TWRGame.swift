@@ -62,7 +62,7 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
         flashCount = 0
         countDown = option.countTime
         
-        scanTimer = NSTimer(timeInterval: 1, target: self, selector: "countDown", userInfo: nil, repeats: true)
+        scanTimer = NSTimer(timeInterval: 1, target: self, selector: Selector("countDown:"), userInfo: nil, repeats: true)
         NSRunLoop.mainRunLoop().addTimer(scanTimer!, forMode: NSRunLoopCommonModes)
     }
     
@@ -81,10 +81,10 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
             
             delegate?.didUpdateRole(player.currentRole(current).color, score: score)
             
-            updateRoleTimer = NSTimer(timeInterval: Double(player.currentRole(current).time), target: self, selector: "updateRole", userInfo: nil, repeats: true)
-            updateScoreTimer = NSTimer(timeInterval: Double(option.scanInterval), target: self, selector: "updateScore", userInfo: nil, repeats: true)
-            flashTimer = NSTimer(timeInterval: Double(option.flashStartTime(player.currentRole(current).time)), target: self, selector: "flash", userInfo: nil, repeats: false)
-            gameTimer = NSTimer(timeInterval: Double(option.gameTime()), target: self, selector: "end", userInfo: nil, repeats: false)
+            updateRoleTimer = NSTimer(timeInterval: Double(player.currentRole(current).time), target: self, selector: Selector("updateRole:"), userInfo: nil, repeats: true)
+            updateScoreTimer = NSTimer(timeInterval: Double(option.scanInterval), target: self, selector: Selector("updateScore:"), userInfo: nil, repeats: true)
+            flashTimer = NSTimer(timeInterval: Double(option.flashStartTime(player.currentRole(current).time)), target: self, selector: Selector("flash:"), userInfo: nil, repeats: false)
+            gameTimer = NSTimer(timeInterval: Double(option.gameTime()), target: self, selector: Selector("end:"), userInfo: nil, repeats: false)
             
             NSRunLoop.mainRunLoop().addTimer(updateRoleTimer!, forMode: NSRunLoopCommonModes)
             NSRunLoop.mainRunLoop().addTimer(updateScoreTimer!, forMode: NSRunLoopCommonModes)
@@ -104,10 +104,10 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
         
         delegate?.didUpdateRole(player.currentRole(current).color, score: score)
         
-        updateRoleTimer = NSTimer(timeInterval: Double(player.currentRole(current).time), target: self, selector: "updateRole", userInfo: nil, repeats: true)
+        updateRoleTimer = NSTimer(timeInterval: Double(player.currentRole(current).time), target: self, selector: Selector("updateRole:"), userInfo: nil, repeats: true)
         NSRunLoop.mainRunLoop().addTimer(updateRoleTimer!, forMode: NSRunLoopCommonModes)
         
-        flashTimer = NSTimer(timeInterval: Double(option.flashStartTime(player.currentRole(current).time)), target: self, selector: "flash", userInfo: nil, repeats: false)
+        flashTimer = NSTimer(timeInterval: Double(option.flashStartTime(player.currentRole(current).time)), target: self, selector: Selector("flash:"), userInfo: nil, repeats: false)
         NSRunLoop.mainRunLoop().addTimer(flashTimer!, forMode: NSRunLoopCommonModes)
     }
     
@@ -127,7 +127,7 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
             var current = UInt(NSDate().timeIntervalSinceDate(startTime!) / 1000)
             var nextRole = player.nextRole(current)
             delegate?.didFlash((nextRole != nil || flashCount! % 2 == 0 ? player.currentRole(current) : nextRole!).color)
-            self.flashTimer = NSTimer(timeInterval: Double(option.flashInterval()), target: self, selector: "flash", userInfo: nil, repeats: false)
+            self.flashTimer = NSTimer(timeInterval: Double(option.flashInterval()), target: self, selector: Selector("flash:"), userInfo: nil, repeats: false)
             NSRunLoop.mainRunLoop().addTimer(flashTimer!, forMode: NSRunLoopCommonModes)
         }
         

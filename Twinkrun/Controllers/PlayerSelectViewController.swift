@@ -151,7 +151,12 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "matchSegue" {
-            
+            let controller = segue.destinationViewController as MatchViewController
+            controller.player = player
+            controller.others = others
+            controller.central = centralManager
+            controller.peripheral = peripheralManager
+            controller.brightness = brightness
         }
     }
 }
