@@ -41,7 +41,7 @@ class TWRPlayerTest: XCTestCase {
             let advData = player.advertisementData(cbUUID)
             let nameKey:String = advData[CBAdvertisementDataLocalNameKey] as NSString
             let playerUUID = (advData[CBAdvertisementDataServiceUUIDsKey] as NSArray).firstObject as CBUUID
-            XCTAssert(nameKey == "\(player.playerName),\(player.colorSeed)", "正しい配信情報を返してくれる")
+            XCTAssert(nameKey == "\(player.name),\(player.colorSeed)", "正しい配信情報を返してくれる")
             XCTAssert(playerUUID == cbUUID, "UUIDが一致する")
             
             return true

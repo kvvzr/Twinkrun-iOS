@@ -102,7 +102,7 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
         
         cell.backgroundColor = UIColor.twinkrunBlack()
         cell.textLabel!.textColor = UIColor.whiteColor()
-        cell.textLabel!.text = other.playerName
+        cell.textLabel!.text = other.name
         cell.accessoryType = other.playWith ? .Checkmark : .None
         return cell
     }
@@ -123,7 +123,7 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
             if other.isEmpty {
                 others!.append(findPlayer)
             } else {
-                other.first!.playerName = findPlayer.playerName
+                other.first!.name = findPlayer.name
                 other.first!.colorSeed = findPlayer.colorSeed
                 other.first!.createRoleList()
             }

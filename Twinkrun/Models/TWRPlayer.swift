@@ -12,13 +12,13 @@ import CoreBluetooth
 class TWRPlayer : Equatable {
     let identifier: NSUUID?
     var playWith: Bool, countedScore: Bool
-    var playerName: NSString
+    var name: NSString
     var colorSeed: UInt32, RSSI: Int?
     var roles: [TWRRole]?
     var option: TWRGameOption
     
     init(playerName: NSString, identifier: NSUUID?, colorSeed: UInt32) {
-        self.playerName = playerName
+        self.name = playerName
         self.identifier = identifier
         self.colorSeed = colorSeed % 1024
         self.option = TWROption.sharedInstance.gameOption
@@ -32,7 +32,7 @@ class TWRPlayer : Equatable {
     init(advertisementDataLocalName: String, identifier: NSUUID) {
         var data: [String] = advertisementDataLocalName.componentsSeparatedByString(",")
         
-        self.playerName = data[0]
+        self.name = data[0]
         self.colorSeed = UInt32(data[1].toInt()!)
         self.identifier = identifier
         self.option = TWROption.sharedInstance.gameOption
@@ -56,7 +56,7 @@ class TWRPlayer : Equatable {
     func advertisementData(UUID: CBUUID) -> Dictionary<NSObject, AnyObject> {
         return [
             CBAdvertisementDataServiceUUIDsKey: [UUID],
-            CBAdvertisementDataLocalNameKey: splitString(playerName, bytes: 12) + "," + String(colorSeed)
+            CBAdvertisementDataLocalNameKey: splitString(name, bytes: 12) + "," + String(colorSeed)
         ]
     }
     
