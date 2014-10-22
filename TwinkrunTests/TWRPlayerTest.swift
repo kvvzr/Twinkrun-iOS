@@ -54,8 +54,30 @@ class TWRPlayerTest: XCTestCase {
        
         let advData = player.advertisementData(cbUUID)
         let nameKey:String = advData[CBAdvertisementDataLocalNameKey] as NSString
-        var remotePlayer = TWRPlayer(advertisementData:["kCBAdvDataLocalName": nameKey], identifier: uuid)
+        var remotePlayer = TWRPlayer(advertisementDataLocalName: nameKey, identifier: uuid)
         XCTAssert(test(remotePlayer, cbUUID), "複製してもうまくいく")
+    }
+    
+    func testRole() {
+        var player = TWRPlayer(playerName: "kwzr", identifier: nil, colorSeed: 0)
+        player.roles = [
+            TWRRole.red(count: 4, time: 3, score: -10),
+            TWRRole.green(count: 3, time: 3, score: 20),
+            TWRRole.black(count: 3, time: 3, score: 0),
+            TWRRole.red(count: 4, time: 3, score: -10),
+            TWRRole.green(count: 3, time: 3, score: 20),
+            TWRRole.black(count: 3, time: 3, score: 0),
+            TWRRole.red(count: 4, time: 3, score: -10),
+            TWRRole.green(count: 3, time: 3, score: 20),
+            TWRRole.black(count: 3, time: 3, score: 0),
+            TWRRole.red(count: 4, time: 3, score: -10)
+        ]
+        
+        XCTAssert(TWRRole.red(count: 4, time: 3, score: -10) == player.currentRole(0))
+        XCTAssert(TWRRole.green(count: 3, time: 3, score: 20) == player.nextRole(0))
+        XCTAssert(TWRRole.green(count: 3, time: 3, score: 20) == player.currentRole(3))
+        XCTAssert(TWRRole.black(count: 3, time: 3, score: 0) == player.currentRole(6))
+        XCTAssert(player.nextRole(27) == nil)
     }
 
     func testPerformanceExample() {

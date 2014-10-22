@@ -116,20 +116,22 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
     }
     
     func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
-        let findPlayer = TWRPlayer(advertisementData: advertisementData, identifier: peripheral.identifier)
-    
-        let other = others!.filter { $0 == findPlayer }
-        if other.isEmpty {
-            others!.append(findPlayer)
-        } else {
-            other.first!.playerName = findPlayer.playerName
-            other.first!.colorSeed = findPlayer.colorSeed
-            other.first!.createRoleList()
-        }
+        if let localName = advertisementData["kCBAdvDataLocalName"] as AnyObject? as? String {
+            let findPlayer = TWRPlayer(advertisementDataLocalName: localName, identifier: peripheral.identifier)
         
-        dispatch_async(dispatch_get_main_queue(), {
-            self.tableView.reloadData()
-        })
+            let other = others!.filter { $0 == findPlayer }
+            if other.isEmpty {
+                others!.append(findPlayer)
+            } else {
+                other.first!.playerName = findPlayer.playerName
+                other.first!.colorSeed = findPlayer.colorSeed
+                other.first!.createRoleList()
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.tableView.reloadData()
+            })
+        }
     }
     
     func centralManagerDidUpdateState(central: CBCentralManager!) {

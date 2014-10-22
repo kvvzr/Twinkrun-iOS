@@ -41,22 +41,22 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2e7-DW-Wgl">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2e7-DW-Wgl">
                                 <constraints>
                                     <constraint firstAttribute="height" id="5nM-zU-4zC"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="94C-Bp-zpl">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="94C-Bp-zpl">
                                 <constraints>
                                     <constraint firstAttribute="height" id="5OW-Uc-dl1"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vD8-Cg-NTh">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vD8-Cg-NTh">
                                 <constraints>
                                     <constraint firstAttribute="height" id="uZ8-xx-95M"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xzs-kf-8Re">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xzs-kf-8Re">
                                 <constraints>
                                     <constraint firstAttribute="height" id="JGs-ID-gpz"/>
                                 </constraints>

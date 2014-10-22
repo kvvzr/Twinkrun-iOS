@@ -14,11 +14,15 @@ extension Array {
     }
     
     mutating func shuffle() {
-        sort {(_, _) in arc4random() % 2 == 0}
+        for _ in 0 ..< count {
+            sort {(_, _) in arc4random() % 2 == 0}
+        }
     }
     
     mutating func shuffle(seed: UInt32) {
         srand(seed)
-        sort {(_, _) in rand() % 2 == 0}
+        for _ in 0 ..< count {
+            sort {(_, _) in rand() % 2 == 0}
+        }
     }
 }

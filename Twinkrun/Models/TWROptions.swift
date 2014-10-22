@@ -53,6 +53,10 @@ class TWRRole: Hashable {
             return "\(name),\(count),\(time),\(score),\(color)".hashValue
         }
     }
+    
+    var description: String {
+        return "TWRRole \(name) \(count) \(time) \(score)"
+    }
 }
 
 func ==(this: TWRRole, that: TWRRole) -> Bool {

@@ -29,8 +29,8 @@ class TWRPlayer : Equatable {
         createRoleList()
     }
     
-    init(advertisementData: [NSObject: AnyObject], identifier: NSUUID) {
-        var data: [String] = (advertisementData["kCBAdvDataLocalName"]! as String).componentsSeparatedByString(",")
+    init(advertisementDataLocalName: String, identifier: NSUUID) {
+        var data: [String] = advertisementDataLocalName.componentsSeparatedByString(",")
         
         self.playerName = data[0]
         self.colorSeed = UInt32(data[1].toInt()!)
