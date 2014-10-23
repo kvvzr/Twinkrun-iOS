@@ -98,9 +98,10 @@ class TWRPlayer : Equatable {
         var data = input.dataUsingEncoding(NSUTF8StringEncoding)
         
         for i in reverse(0...min(length, data!.length)) {
-            var result = NSString(data: data!.subdataWithRange(NSRange(location: 0, length: i)), encoding: NSUTF8StringEncoding)
-            if result.length > 0 {
-                return result
+            if let result:NSString = NSString(data: data!.subdataWithRange(NSRange(location: 0, length: i)), encoding: NSUTF8StringEncoding) {
+                if result.length > 0 {
+                    return result
+                }
             }
         }
         

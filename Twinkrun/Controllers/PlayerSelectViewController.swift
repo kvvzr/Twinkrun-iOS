@@ -101,8 +101,8 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
         var other = others![indexPath.row]
         
         cell.backgroundColor = UIColor.twinkrunBlack()
-        cell.textLabel!.textColor = UIColor.whiteColor()
-        cell.textLabel!.text = other.name
+        cell.textLabel.textColor = UIColor.whiteColor()
+        cell.textLabel.text = other.name
         cell.accessoryType = other.playWith ? .Checkmark : .None
         return cell
     }
@@ -137,7 +137,7 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
     func centralManagerDidUpdateState(central: CBCentralManager!) {
         if centralManager?.state == CBCentralManagerState.PoweredOn {
             centralManager!.scanForPeripheralsWithServices(
-                [CBUUID.UUIDWithString(option!.advertiseUUID)],
+                [CBUUID(string: option!.advertiseUUID)],
                 options: [CBCentralManagerScanOptionAllowDuplicatesKey: true]
             )
         }
@@ -146,7 +146,7 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
     func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager!) {
         if peripheralManager?.state == CBPeripheralManagerState.PoweredOn {
             peripheralManager!.startAdvertising(
-                player!.advertisementData(CBUUID.UUIDWithString(option!.advertiseUUID))
+                player!.advertisementData(CBUUID(string: option!.advertiseUUID))
             )
         }
     }

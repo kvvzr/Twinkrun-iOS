@@ -47,8 +47,8 @@ class TWRPlayerTest: XCTestCase {
             return true
         }
         
-        let uuid = NSUUID(UUIDString: "eddbfbac-57af-11e4-a09f-7831c1d35942")
-        let cbUUID = CBUUID.UUIDWithString("0e15d2fc-57ac-11e4-a8ea-7831c1d35942")
+        let uuid = NSUUID(UUIDString: "eddbfbac-57af-11e4-a09f-7831c1d35942")!
+        let cbUUID = CBUUID(string: "0e15d2fc-57ac-11e4-a8ea-7831c1d35942")
         var player = TWRPlayer(playerName: "mactkg", identifier: uuid, colorSeed:1024)
         XCTAssert(test(player, cbUUID), "普通のプレイヤーでうまくいく")
        

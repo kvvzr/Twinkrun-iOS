@@ -25,12 +25,15 @@ class TitleViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        navigationController!.navigationBar.barTintColor = UIColor.twinkrunGreen()
-        navigationController!.navigationBar.titleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.whiteColor(),
-            NSFontAttributeName: UIFont(name: "HelveticaNeue-Light", size: 22)
-        ]
-        navigationController!.navigationBar.tintColor = UIColor.whiteColor()
+        let font = UIFont(name: "HelveticaNeue-Light", size: 22)
+        if let font = font {
+            navigationController!.navigationBar.barTintColor = UIColor.twinkrunGreen()
+            navigationController!.navigationBar.titleTextAttributes = [
+                NSForegroundColorAttributeName: UIColor.whiteColor(),
+                NSFontAttributeName: font
+            ]
+            navigationController!.navigationBar.tintColor = UIColor.whiteColor()
+        }
     }
 
     override func didReceiveMemoryWarning() {
