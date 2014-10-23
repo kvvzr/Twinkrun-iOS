@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4Zg-tW-LvH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4Zg-tW-LvH">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -75,7 +75,6 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="centerX" secondItem="rAx-3D-Qo7" secondAttribute="centerX" id="9WW-Lv-rzo"/>
                                     <constraint firstAttribute="centerY" secondItem="rAx-3D-Qo7" secondAttribute="centerY" id="oKo-AL-Lvh"/>
@@ -196,11 +195,65 @@
                     <connections>
                         <outlet property="countLabel" destination="nwy-3H-Gj5" id="5m9-0F-EyQ"/>
                         <outlet property="startButton" destination="7bV-uV-SYU" id="c9Q-Fe-zcP"/>
+                        <segue destination="UAo-gf-Dqz" kind="push" identifier="resultSegue" id="BeG-bB-hlQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dga-Jg-jcF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="803" y="128"/>
+        </scene>
+        <!--Result-->
+        <scene sceneID="AMc-eh-rh7">
+            <objects>
+                <tableViewController id="UAo-gf-Dqz" customClass="ResultViewController" customModule="Twinkrun" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Ath-S8-1eO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="resultCell" rowHeight="320" id="nri-zc-nL9">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nri-zc-nL9" id="4Qu-0l-qS7">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lmY-u9-7JD" customClass="BEMSimpleLineGraphView">
+                                            <rect key="frame" x="16" y="16" width="288" height="224"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="224" id="OMV-Dp-QVo"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.1999492645" green="0.20364658529999999" blue="0.2190307826" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstItem="lmY-u9-7JD" firstAttribute="top" secondItem="4Qu-0l-qS7" secondAttribute="topMargin" constant="8" id="PHi-bN-tNL"/>
+                                        <constraint firstItem="lmY-u9-7JD" firstAttribute="leading" secondItem="4Qu-0l-qS7" secondAttribute="leadingMargin" constant="8" id="dsd-rU-oDS"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="lmY-u9-7JD" secondAttribute="trailing" constant="8" id="rxJ-nt-crb"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="tintColor" red="0.99987119436264038" green="0.99998223781585693" blue="0.99984115362167358" alpha="1" colorSpace="calibratedRGB"/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="UAo-gf-Dqz" id="PIW-A7-c4b"/>
+                            <outlet property="delegate" destination="UAo-gf-Dqz" id="z2e-K5-7jB"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Result" id="d2W-x7-KMd">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="Ago-OI-iKg">
+                            <connections>
+                                <action selector="onClose:" destination="UAo-gf-Dqz" id="qyB-AF-edS"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="vC1-Ms-Md2">
+                            <connections>
+                                <action selector="onAction:" destination="UAo-gf-Dqz" id="w2A-Mt-hr4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n6w-L8-kNx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1177" y="128"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="JOY-w5-yJE">

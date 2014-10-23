@@ -19,6 +19,7 @@ class MatchViewController: UIViewController, TWRGameDelegate {
     var peripheral: CBPeripheralManager?
     var brightness: CGFloat?
     var game: TWRGame?
+    var audio: OALSimpleAudio?
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -28,6 +29,14 @@ class MatchViewController: UIViewController, TWRGameDelegate {
         super.viewDidLoad()
         
         var swipe = UISwipeGestureRecognizer(target: self, action: Selector("backToPlayerSelect"))
+        swipe.direction = UISwipeGestureRecognizerDirection.Right
+        view.addGestureRecognizer(swipe)
+        
+        audio = OALSimpleAudio.sharedInstance()
+        audio!.honorSilentSwitch = true
+        audio!.preloadEffect("beep.mp3")
+        audio!.preloadEffect("count-down.mp3")
+        audio!.preloadEffect("score-transition.mp3")
         
         game = TWRGame(player: player!, others: others!, central: central!, peripheral: peripheral!)
         game!.delegate = self
@@ -35,6 +44,8 @@ class MatchViewController: UIViewController, TWRGameDelegate {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        navigationController!.setNavigationBarHidden(false, animated: animated)
     }
     
     override func didReceiveMemoryWarning() {
@@ -70,6 +81,7 @@ class MatchViewController: UIViewController, TWRGameDelegate {
     }
     
     func didUpdateCountDown(count: UInt) {
+        audio!.playEffect("count-down.mp3")
         dispatch_async(dispatch_get_main_queue(), {
             self.countLabel.text = String(count)
         })
@@ -80,9 +92,11 @@ class MatchViewController: UIViewController, TWRGameDelegate {
     }
     
     func didUpdateScore(score: Int) {
+        audio!.playEffect("score-transition.mp3", volume: 0.2, pitch: pitch(score), pan: 0.0, loop: false)
     }
     
     func didUpdateRole(color: UIColor, score: Int) {
+        audio!.playEffect("score-transition.mp3")
         view.backgroundColor = color
     }
     
@@ -91,9 +105,26 @@ class MatchViewController: UIViewController, TWRGameDelegate {
     }
     
     func didEndGame() {
+        audio!.stopAllEffects()
+        audio!.playEffect("beep.mp3")
+        audio!.unloadAllEffects()
+        
         if central!.state == CBCentralManagerState.PoweredOn && peripheral!.state == CBPeripheralManagerState.PoweredOff {
             central!.stopScan()
             peripheral!.stopAdvertising()
+        }
+        
+        performSegueWithIdentifier("resultSegue", sender: self)
+    }
+    
+    func pitch(score: Int) -> Float {
+        return min(1.0, Float(score) / Float(TWROption.sharedInstance.gameOption.startScore * 2) + 0.3)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "resultSegue" {
+            let controller = segue.destinationViewController as ResultViewController
+            controller.result = TWRResult(player: player!, others: others!, scores: game!.transition!, score: game!.score, option: TWROption.sharedInstance.gameOption)
         }
     }
 }

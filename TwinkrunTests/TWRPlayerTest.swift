@@ -8,7 +8,6 @@
 
 import UIKit
 import XCTest
-import Twinkrun
 import CoreBluetooth
 
 class TWRPlayerTest: XCTestCase {
