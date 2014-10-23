@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 class TWRResult: NSObject, BEMSimpleLineGraphDelegate, BEMSimpleLineGraphDataSource {
     let player: TWRPlayer
