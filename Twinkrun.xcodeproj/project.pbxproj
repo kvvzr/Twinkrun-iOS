@@ -34,6 +34,7 @@
 		8F781DEE19F90E360048C841 /* beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8F781DEB19F90E360048C841 /* beep.mp3 */; };
 		8F781DEF19F90E360048C841 /* count-down.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8F781DEC19F90E360048C841 /* count-down.mp3 */; };
 		8F781DF019F90E360048C841 /* score-transition.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8F781DED19F90E360048C841 /* score-transition.mp3 */; };
+		8F9D050A19F922C6006BF582 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9D050919F922C6006BF582 /* SettingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		8F781DEB19F90E360048C841 /* beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = beep.mp3; sourceTree = "<group>"; };
 		8F781DEC19F90E360048C841 /* count-down.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "count-down.mp3"; sourceTree = "<group>"; };
 		8F781DED19F90E360048C841 /* score-transition.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "score-transition.mp3"; sourceTree = "<group>"; };
+		8F9D050919F922C6006BF582 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +207,7 @@
 				8F186D1019ED304300D4FB04 /* PlayerSelectViewController.swift */,
 				8F745B4519EFB740008A5DEE /* MatchViewController.swift */,
 				8F3D8D9C19F8E2ED00BC2B1E /* ResultViewController.swift */,
+				8F9D050919F922C6006BF582 /* SettingViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F08D6DF19E621A80035069C /* TWRResult.swift in Sources */,
+				8F9D050A19F922C6006BF582 /* SettingViewController.swift in Sources */,
 				8F08D6B119E609720035069C /* TitleViewController.swift in Sources */,
 				8F08D6D819E618190035069C /* ArrayExtension.swift in Sources */,
 				8F08D6AF19E609720035069C /* AppDelegate.swift in Sources */,
