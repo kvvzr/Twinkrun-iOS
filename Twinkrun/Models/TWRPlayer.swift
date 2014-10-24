@@ -9,7 +9,7 @@
 import Foundation
 import CoreBluetooth
 
-class TWRPlayer : Equatable {
+class TWRPlayer: NSCoding, Equatable {
     let identifier: NSUUID?
     var playWith: Bool, countedScore: Bool
     var name: NSString
@@ -39,6 +39,24 @@ class TWRPlayer : Equatable {
         
         playWith = true
         countedScore = true
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        self.name = aDecoder.decodeObjectForKey("name") as NSString
+        self.identifier = aDecoder.decodeObjectForKey("identifier") as? NSUUID
+        self.colorSeed = UInt32(aDecoder.decodeIntegerForKey("colorSeed"))
+        self.option = TWROption.sharedInstance.gameOption
+        
+        playWith = true
+        countedScore = false
+        
+        createRoleList()
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(name, forKey: "name")
+        aCoder.encodeObject(identifier, forKey: "identifier")
+        aCoder.encodeObject(Int(colorSeed), forKey: "colorSeed")
     }
     
     func createRoleList() {

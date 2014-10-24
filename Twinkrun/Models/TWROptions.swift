@@ -23,7 +23,7 @@ extension UIColor {
     }
 }
 
-class TWRRole: Hashable {
+class TWRRole: NSCoding, Hashable {
     let name: NSString
     let count: UInt, time: UInt, score: Float
     let color: UIColor
@@ -34,6 +34,22 @@ class TWRRole: Hashable {
         self.count = count
         self.time = time
         self.score = score
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        self.name = aDecoder.decodeObjectForKey("name") as NSString
+        self.color = aDecoder.decodeObjectForKey("color") as UIColor
+        self.count = UInt(aDecoder.decodeIntegerForKey("count"))
+        self.time = UInt(aDecoder.decodeIntegerForKey("time"))
+        self.score = aDecoder.decodeFloatForKey("score")
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(name, forKey: "name")
+        aCoder.encodeObject(color, forKey: "color")
+        aCoder.encodeInteger(Int(count), forKey: "count")
+        aCoder.encodeInteger(Int(time), forKey: "time")
+        aCoder.encodeFloat(score, forKey: "score")
     }
     
     class func red(#count: UInt, time: UInt, score: Float) -> TWRRole {
