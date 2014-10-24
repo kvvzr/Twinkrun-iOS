@@ -11,12 +11,12 @@ import UIKit
 import CoreBluetooth
 
 enum SettingType {
-    case Input(defaultValue: String, onChange: (String, TWROption) -> Void)
+    case Input(defaultValue: String, onChange: String)
     case Select(title: String, defaultValue: String, values: [String], onChange: (String, TWROption) -> Void)
     case PushView(title: String, onSelect: UINavigationController -> Void)
 }
 
-class SettingViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource {
+class SettingViewController: UITableViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     var option: TWROption
     let settings: [String: [SettingType]]
 
@@ -24,7 +24,7 @@ class SettingViewController: UITableViewController, UITableViewDelegate, UITable
         option = TWROption.sharedInstance
         settings = [
             "Player Name": [
-                SettingType.Input(defaultValue: option.playerName, onChange: { (text, option) in option.playerName = text })
+                SettingType.Input(defaultValue: option.playerName, onChange: "onChangePlayerName:")
             ],
             "Help": [
                 SettingType.PushView(title: "Introduction", { navigationController in
@@ -119,6 +119,8 @@ class SettingViewController: UITableViewController, UITableViewDelegate, UITable
             field.tintColor = UIColor.twinkrunGreen()
             field.textColor = UIColor.whiteColor()
             field.text = value
+            field.delegate = self
+            field.addTarget(self, action: Selector(onChange), forControlEvents: UIControlEvents.EditingChanged)
             
             return cell
         case .Select(title: let title, defaultValue: let value, values: let values, onChange: let onChange):
@@ -150,5 +152,14 @@ class SettingViewController: UITableViewController, UITableViewDelegate, UITable
             onSelect(navigationController!)
             break
         }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func onChangePlayerName(textField: UITextField) {
+        option.playerName = textField.text
     }
 }

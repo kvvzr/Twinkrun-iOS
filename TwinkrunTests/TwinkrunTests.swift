@@ -21,9 +21,11 @@ class TwinkrunTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
+    func testOption() {
+        var option = TWROption.sharedInstance
+        option.playerName = "WAIWAI"
+        
+        XCTAssert(TWROption.sharedInstance.playerName == "WAIWAI")
     }
     
     func testPerformanceExample() {
