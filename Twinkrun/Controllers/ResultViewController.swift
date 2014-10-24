@@ -47,7 +47,7 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 320
+        return 240
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -69,9 +69,40 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
         var cell = tableView.dequeueReusableCellWithIdentifier("resultCell") as UITableViewCell
         
         cell.backgroundColor = UIColor.twinkrunBlack()
-        var graph:BEMSimpleLineGraphView = cell.viewWithTag(1) as BEMSimpleLineGraphView
-        //graph.delegate = result!
-        //graph.dataSource = result!
+        
+        var view = cell.viewWithTag(1)!
+        
+        var roleCount = result!.scores.count
+        var graphColor = result!.score < 1000 ? UIColor.twinkrunRed() : UIColor.twinkrunGreen()
+        var gradient = CAGradientLayer()
+        gradient.frame = view.bounds
+        gradient.colors = [
+            graphColor.colorWithAlphaComponent(0.2).CGColor,
+            graphColor.CGColor
+        ]
+        view.layer.insertSublayer(gradient, atIndex: 0)
+        
+        view.layer.cornerRadius = 4
+        view.clipsToBounds = true
+        
+        var graph:BEMSimpleLineGraphView = cell.viewWithTag(2) as BEMSimpleLineGraphView
+        
+        graph.delegate = result!
+        graph.dataSource = result!
+        
+        graph.enablePopUpReport = true
+        graph.enableReferenceAxisLines = true
+        graph.colorBackgroundXaxis = UIColor.whiteColor()
+        graph.colorTop = UIColor.clearColor()
+        graph.colorBottom = UIColor.whiteColor().colorWithAlphaComponent(0.2)
+        graph.colorLine = UIColor.whiteColor()
+        
+        var dateText = NSDateFormatter.localizedStringFromDate(NSDate(), dateStyle: .MediumStyle, timeStyle: .ShortStyle)
+        var dateLabel = cell.viewWithTag(3) as UILabel
+        dateLabel.text = dateText
+        
+        var scoreLabel = cell.viewWithTag(4) as UILabel
+        scoreLabel.text = "\(NSNumberFormatter.localizedStringFromNumber(result!.score, numberStyle: .DecimalStyle)) Point"
         
         return cell
     }

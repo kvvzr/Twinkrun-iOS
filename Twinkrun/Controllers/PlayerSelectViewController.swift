@@ -21,8 +21,13 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        centralManager?.delegate = self
-        peripheralManager?.delegate = self
+        if let central = centralManager {
+            central.delegate = self
+        }
+        
+        if let peripheral = peripheralManager {
+            peripheral.delegate = self
+        }
         
         navigationController!.setNavigationBarHidden(false, animated: animated)
     }
@@ -50,8 +55,8 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        centralManager?.stopScan()
-        peripheralManager?.stopAdvertising()
+        //centralManager?.stopScan()
+        //peripheralManager?.stopAdvertising()
         
         navigationController!.setNavigationBarHidden(true, animated: animated)
     }
@@ -135,8 +140,8 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
     }
     
     func centralManagerDidUpdateState(central: CBCentralManager!) {
-        if centralManager?.state == CBCentralManagerState.PoweredOn {
-            centralManager!.scanForPeripheralsWithServices(
+        if central.state == CBCentralManagerState.PoweredOn {
+            central.scanForPeripheralsWithServices(
                 [CBUUID(string: option!.advertiseUUID)],
                 options: [CBCentralManagerScanOptionAllowDuplicatesKey: true]
             )
@@ -144,8 +149,8 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
     }
     
     func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager!) {
-        if peripheralManager?.state == CBPeripheralManagerState.PoweredOn {
-            peripheralManager!.startAdvertising(
+        if peripheral.state == CBPeripheralManagerState.PoweredOn {
+            peripheral.startAdvertising(
                 player!.advertisementData(CBUUID(string: option!.advertiseUUID))
             )
         }

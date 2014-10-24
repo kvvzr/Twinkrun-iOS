@@ -15,6 +15,7 @@ class TWRResult: NSObject, BEMSimpleLineGraphDelegate, BEMSimpleLineGraphDataSou
     let scores: Array<(role: TWRRole, scores: [Int])>
     let score: Int
     let option: TWRGameOption
+    var flattenScores: [Int]
     
     init(player: TWRPlayer, others: [TWRPlayer], scores: Array<(role: TWRRole, scores: [Int])>, score: Int, option: TWRGameOption) {
         self.player = player
@@ -22,13 +23,18 @@ class TWRResult: NSObject, BEMSimpleLineGraphDelegate, BEMSimpleLineGraphDataSou
         self.scores = scores
         self.score = score
         self.option = option
+        
+        flattenScores = []
+        for roleAndScores in scores {
+            flattenScores += roleAndScores.scores
+        }
     }
     
     func numberOfPointsInLineGraph(graph: BEMSimpleLineGraphView!) -> Int {
-        return 5
+        return flattenScores.count
     }
 
     func lineGraph(graph: BEMSimpleLineGraphView!, valueForPointAtIndex index: Int) -> CGFloat {
-        return 100
+        return CGFloat(flattenScores[index])
     }
 }

@@ -21,41 +21,6 @@ class TWRPlayerTest: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-
-    func testPlayer() {
-        func test(player:TWRPlayer, cbUUID:CBUUID) -> Bool {
-            var option = TWROption.sharedInstance.gameOption
-            XCTAssertNotNil(player, "playerある")
-            XCTAssertTrue(player.colorSeed < 1024, "colorSeedは1024未満")
-           
-            XCTAssertNotNil(player.currentRole(0), "ちゃんと現在の色が返ってくる")
-            XCTAssertNotNil(player.currentRole(16), "ちゃんと現在の色が返ってくる")
-            XCTAssertNotNil(player.currentRole(option.gameTime()), "ちゃんと現在の色が返ってくる")
-        
-            XCTAssertNotNil(player.nextRole(0), "ちゃんと次の色が返ってくる")
-            XCTAssert(player.nextRole(0) == player.currentRole(3), "ちゃんと次の色が返ってくる")
-            XCTAssert(player.nextRole(5) == player.currentRole(8), "ちゃんと次の色が返ってくる")
-            XCTAssertNil(player.nextRole(option.gameTime()-3), "次がおしまいの時はnilが返ってくる")
-       
-            let advData = player.advertisementData(cbUUID)
-            let nameKey:String = advData[CBAdvertisementDataLocalNameKey] as NSString
-            let playerUUID = (advData[CBAdvertisementDataServiceUUIDsKey] as NSArray).firstObject as CBUUID
-            XCTAssert(nameKey == "\(player.name),\(player.colorSeed)", "正しい配信情報を返してくれる")
-            XCTAssert(playerUUID == cbUUID, "UUIDが一致する")
-            
-            return true
-        }
-        
-        let uuid = NSUUID(UUIDString: "eddbfbac-57af-11e4-a09f-7831c1d35942")!
-        let cbUUID = CBUUID(string: "0e15d2fc-57ac-11e4-a8ea-7831c1d35942")
-        var player = TWRPlayer(playerName: "mactkg", identifier: uuid, colorSeed:1024)
-        XCTAssert(test(player, cbUUID), "普通のプレイヤーでうまくいく")
-       
-        let advData = player.advertisementData(cbUUID)
-        let nameKey:String = advData[CBAdvertisementDataLocalNameKey] as NSString
-        var remotePlayer = TWRPlayer(advertisementDataLocalName: nameKey, identifier: uuid)
-        XCTAssert(test(remotePlayer, cbUUID), "複製してもうまくいく")
-    }
     
     func testRole() {
         var player = TWRPlayer(playerName: "kwzr", identifier: nil, colorSeed: 0)
@@ -72,11 +37,17 @@ class TWRPlayerTest: XCTestCase {
             TWRRole.red(count: 4, time: 3, score: -10)
         ]
         
+        XCTAssert(TWRRole.red(count: 4, time: 3, score: -10) == player.previousRole(0))
         XCTAssert(TWRRole.red(count: 4, time: 3, score: -10) == player.currentRole(0))
-        XCTAssert(TWRRole.green(count: 3, time: 3, score: 20) == player.nextRole(0))
+        XCTAssert(TWRRole.green(count: 3, time: 3, score: 20) == player.nextRole(0)!)
+        XCTAssert(TWRRole.red(count: 4, time: 3, score: -10) == player.previousRole(3))
         XCTAssert(TWRRole.green(count: 3, time: 3, score: 20) == player.currentRole(3))
         XCTAssert(TWRRole.black(count: 3, time: 3, score: 0) == player.currentRole(6))
+        XCTAssert(TWRRole.black(count: 3, time: 3, score: 0) == player.previousRole(27))
+        XCTAssert(TWRRole.red(count: 4, time: 3, score: -10) == player.currentRole(27))
         XCTAssert(player.nextRole(27) == nil)
+        XCTAssert(TWRRole.red(count: 4, time: 3, score: -10) == player.previousRole(30))
+        XCTAssert(TWRRole.red(count: 4, time: 3, score: -10) == player.currentRole(30))
     }
 
     func testPerformanceExample() {

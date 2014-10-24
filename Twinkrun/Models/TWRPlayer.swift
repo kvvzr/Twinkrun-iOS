@@ -60,18 +60,30 @@ class TWRPlayer : Equatable {
         ]
     }
     
-    func currentRole(second: UInt) -> TWRRole {
-        if(roles == nil) {
-            createRoleList()
+    func previousRole(second: UInt) -> TWRRole? {
+        var sec = second % option.gameTime()
+        var progress: UInt = 0
+        
+        for i in 0 ..< roles!.count {
+            let nextLimit = progress + roles![i].time
+            if nextLimit > sec {
+                return i == 0 ? roles!.last! : roles![i - 1]
+            }
+            progress = nextLimit
         }
+        
+        return nil
+    }
+    
+    func currentRole(second: UInt) -> TWRRole {
         var sec = second % option.gameTime()
         var progress: UInt = 0
         var current: TWRRole?
         
-        for role in roles! {
-            let nextLimit = progress + role.time
+        for i in 0 ..< roles!.count {
+            let nextLimit = progress + roles![i].time
             if nextLimit > sec {
-                current = role
+                current = roles![i]
                 break
             }
             progress = nextLimit
@@ -83,10 +95,10 @@ class TWRPlayer : Equatable {
     func nextRole(second: UInt) -> TWRRole? {
         var progress: UInt = 0
        
-        for(var i = 0; i < roles!.count-1; i++) {
+        for i in 0 ..< roles!.count - 1 {
             let nextLimit = progress + roles![i].time
             if nextLimit > second {
-                return roles![i+1]
+                return roles![i + 1]
             }
             progress = nextLimit
         }

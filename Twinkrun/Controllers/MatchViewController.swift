@@ -15,8 +15,8 @@ class MatchViewController: UIViewController, TWRGameDelegate {
     
     var player: TWRPlayer?
     var others: [TWRPlayer]?
-    var central: CBCentralManager?
-    var peripheral: CBPeripheralManager?
+    weak var central: CBCentralManager?
+    weak var peripheral: CBPeripheralManager?
     var brightness: CGFloat?
     var game: TWRGame?
     var audio: OALSimpleAudio?

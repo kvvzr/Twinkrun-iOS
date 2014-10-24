@@ -37,8 +37,8 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
     var startTime: NSDate?
     var scanTimer: NSTimer?, updateRoleTimer: NSTimer?, updateScoreTimer: NSTimer?, flashTimer: NSTimer?, gameTimer: NSTimer?
     
-    var centralManager: CBCentralManager
-    var peripheralManager: CBPeripheralManager
+    unowned var centralManager: CBCentralManager
+    unowned var peripheralManager: CBPeripheralManager
     
     var delegate: TWRGameDelegate?
     
@@ -53,6 +53,9 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
         addScore = 0
         
         super.init()
+        
+        centralManager.delegate = self
+        peripheralManager.delegate = self
     }
     
     func start() {
@@ -88,9 +91,9 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
             flashTimer = NSTimer(timeInterval: Double(option.flashStartTime(currentRole.time)), target: self, selector: Selector("flash:"), userInfo: nil, repeats: false)
             gameTimer = NSTimer(timeInterval: Double(option.gameTime()), target: self, selector: Selector("end:"), userInfo: nil, repeats: false)
             
+            NSRunLoop.mainRunLoop().addTimer(flashTimer!, forMode: NSRunLoopCommonModes)
             NSRunLoop.mainRunLoop().addTimer(updateRoleTimer!, forMode: NSRunLoopCommonModes)
             NSRunLoop.mainRunLoop().addTimer(updateScoreTimer!, forMode: NSRunLoopCommonModes)
-            NSRunLoop.mainRunLoop().addTimer(flashTimer!, forMode: NSRunLoopCommonModes)
             NSRunLoop.mainRunLoop().addTimer(gameTimer!, forMode: NSRunLoopCommonModes)
         } else {
             delegate?.didUpdateCountDown(countDown!)
@@ -98,12 +101,15 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
         }
     }
     
-    func updateRole(timer: NSTimer) {
+    func updateRole(timer: NSTimer?) {
         var current = UInt(NSDate().timeIntervalSinceDate(startTime!))
+        var prevRole = player.previousRole(current)
         var currentRole = player.currentRole(current)
         
-        transition! += [(role: currentRole, scores: currentTransition!)]
-        
+        if let prevRole = prevRole {
+            transition! += [(role: prevRole, scores: currentTransition!)]
+        }
+            
         flashCount = 0
         currentTransition = []
         
@@ -118,6 +124,8 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
     
     func updateScore(timer: NSTimer) {
         currentTransition!.append(score)
+        
+        score += addScore
         addScore = 0
         
         for player in others {
@@ -134,7 +142,7 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
             if (nextRole == nil) {
                 return
             }
-            delegate?.didFlash((flashCount! % 2 == 0 ? nextRole! : player.currentRole(current)).color)
+            delegate?.didFlash((flashCount! % 2 == 0 ? player.currentRole(current) : nextRole!).color)
             self.flashTimer = NSTimer(timeInterval: Double(option.flashInterval()), target: self, selector: Selector("flash:"), userInfo: nil, repeats: false)
             NSRunLoop.mainRunLoop().addTimer(flashTimer!, forMode: NSRunLoopCommonModes)
         }
@@ -143,6 +151,15 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
     }
     
     func end() {
+        if let startTime = startTime {
+            var current = UInt(NSDate().timeIntervalSinceDate(startTime))
+            var prevRole = player.previousRole(current)!
+            
+            transition! += [(role: prevRole, scores: currentTransition!)]
+            
+            currentTransition = []
+        }
+        
         if let timer: NSTimer = scanTimer {
             timer.invalidate()
         }
@@ -173,16 +190,19 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
     
     func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
         if let localName = advertisementData["kCBAdvDataLocalName"] as AnyObject? as? String {
-            var current = UInt(NSDate().timeIntervalSinceDate(startTime!) / 1000)
-            var findPlayer = TWRPlayer(advertisementDataLocalName: localName, identifier: peripheral.identifier)
-            
-            var other = others.filter { $0 == findPlayer }
-            if !other.isEmpty {
-                other[0].RSSI = RSSI.integerValue;
+            if let startTime = startTime {
+                var current = UInt(NSDate().timeIntervalSinceDate(startTime))
+                var findPlayer = TWRPlayer(advertisementDataLocalName: localName, identifier: peripheral.identifier)
                 
-                if other[0].playWith && !other[0].countedScore {
-                    addScore -= Int(/**/ player.currentRole(current).score)
-                    addScore += Int(/*TODO： 距離によってスコアを変える */ other[0].currentRole(current).score)
+                var other = others.filter { $0 == findPlayer }
+                if !other.isEmpty {
+                    other.first!.RSSI = RSSI.integerValue
+                    if other.first!.playWith && !other.first!.countedScore && RSSI.integerValue <= 0 {
+                        var point = pow(1.2, (RSSI.floatValue + 60) / 4)
+                        addScore -= Int(point * player.currentRole(current).score)
+                        addScore += Int(point * other.first!.currentRole(current).score)
+                        other.first!.countedScore = true
+                    }
                 }
             }
         }
