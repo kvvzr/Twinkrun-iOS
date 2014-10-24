@@ -52,6 +52,9 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
         tableView.backgroundView = nil
         tableView.backgroundColor = UIColor.twinkrunBlack()
         tableView.tableFooterView = UIView(frame: CGRectZero)
+        tableView.layoutMargins = UIEdgeInsetsZero
+        
+        tableView.layoutIfNeeded()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -80,22 +83,15 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if cell.respondsToSelector(Selector("separatorInset")) {
-            cell.separatorInset = UIEdgeInsetsZero
-        }
-        if cell.respondsToSelector(Selector("layoutMargins")) {
-            cell.layoutMargins = UIEdgeInsetsZero
-        }
-        
         var view = UIView()
-        view.backgroundColor = UIColor.blackColor()
+        view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
         cell.selectedBackgroundView = view
     }
     
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if view is UITableViewHeaderFooterView {
             var header = view as UITableViewHeaderFooterView
-            header.contentView.backgroundColor = UIColor.blackColor()
+            header.contentView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
             header.textLabel.textColor = UIColor.whiteColor()
         }
     }
@@ -109,6 +105,7 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
             var cell = tableView.dequeueReusableCellWithIdentifier("inputCell") as UITableViewCell
             
             cell.backgroundColor = UIColor.twinkrunBlack()
+            cell.layoutMargins = UIEdgeInsetsZero
             cell.separatorInset = UIEdgeInsetsZero
             
             var field = cell.viewWithTag(1) as UITextField
@@ -130,6 +127,7 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
             var cell = UITableViewCell()
             
             cell.backgroundColor = UIColor.twinkrunBlack()
+            cell.layoutMargins = UIEdgeInsetsZero
             cell.separatorInset = UIEdgeInsetsZero
             cell.tintColor = UIColor.whiteColor()
             cell.textLabel.textColor = UIColor.whiteColor()

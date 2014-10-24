@@ -27,7 +27,10 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
         tableView.backgroundView = nil
         tableView.backgroundColor = UIColor.twinkrunBlack()
         tableView.tableFooterView = UIView(frame: CGRectZero)
+        tableView.layoutMargins = UIEdgeInsetsZero
         tableView.separatorInset = UIEdgeInsetsZero
+        
+        tableView.layoutIfNeeded()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -50,25 +53,12 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
         return 240
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if tableView.respondsToSelector(Selector("separatorInset")) {
-            tableView.separatorInset = UIEdgeInsetsZero
-        }
-        if tableView.respondsToSelector(Selector("layoutMargins")) {
-            tableView.layoutMargins = UIEdgeInsetsZero
-        }
-        if cell.respondsToSelector(Selector("separatorInset")) {
-            cell.separatorInset = UIEdgeInsetsZero
-        }
-        if cell.respondsToSelector(Selector("layoutMargins")) {
-            cell.layoutMargins = UIEdgeInsetsZero
-        }
-    }
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("resultCell") as UITableViewCell
         
         cell.backgroundColor = UIColor.twinkrunBlack()
+        cell.layoutMargins = UIEdgeInsetsZero
+        cell.separatorInset = UIEdgeInsetsZero
         
         var view = cell.viewWithTag(1)!
         
