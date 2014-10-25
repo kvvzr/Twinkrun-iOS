@@ -142,7 +142,7 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
             if (nextRole == nil) {
                 return
             }
-            delegate?.didFlash((flashCount! % 2 == 0 ? player.currentRole(current) : nextRole!).color)
+            delegate?.didFlash((flashCount! % 2 == 0 ? nextRole! : player.currentRole(current)).color)
             self.flashTimer = NSTimer(timeInterval: Double(option.flashInterval()), target: self, selector: Selector("flash:"), userInfo: nil, repeats: false)
             NSRunLoop.mainRunLoop().addTimer(flashTimer!, forMode: NSRunLoopCommonModes)
         }

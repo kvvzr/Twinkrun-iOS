@@ -102,7 +102,7 @@ class TWRGameOption: NSObject, NSCoding {
     var scanInterval: Float = 0.2
     var startScore = 1000
     var flashTime: UInt = 1
-    var flashCount: UInt = 3
+    var flashCount: UInt = 4
     var countTime: UInt = 5
     var roles: [TWRRole] = [
         TWRRole.red(count: 4, time: 3, score: -10),
