@@ -27,7 +27,6 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        
         navigationController!.setNavigationBarHidden(false, animated: animated)
     }
     
@@ -51,7 +50,6 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
             data = [:]
         }
         data![dateText] = result
-        println(data)
         
         NSKeyedArchiver.archiveRootObject(data!, toFile: path)
     }
