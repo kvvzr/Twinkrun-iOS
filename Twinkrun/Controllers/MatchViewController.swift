@@ -92,6 +92,7 @@ class MatchViewController: UIViewController, TWRGameDelegate {
     }
     
     func didUpdateScore(score: Int) {
+        UIScreen.mainScreen().brightness = scoreToBrightness(score)
         audio!.playEffect("score-transition.mp3", volume: 0.2, pitch: pitch(score), pan: 0.0, loop: false)
     }
     
@@ -109,6 +110,8 @@ class MatchViewController: UIViewController, TWRGameDelegate {
         audio!.playEffect("beep.mp3")
         audio!.unloadAllEffects()
         
+        UIScreen.mainScreen().brightness = brightness!
+        
         if central!.state == CBCentralManagerState.PoweredOn && peripheral!.state == CBPeripheralManagerState.PoweredOff {
             central!.stopScan()
             peripheral!.stopAdvertising()
@@ -119,6 +122,10 @@ class MatchViewController: UIViewController, TWRGameDelegate {
     
     func pitch(score: Int) -> Float {
         return min(1.0, Float(score) / Float(TWROption.sharedInstance.gameOption.startScore * 2) + 0.3)
+    }
+    
+    func scoreToBrightness(score: Int) -> CGFloat {
+        return CGFloat(min(1.0, max(0.0, Float(score) / Float(TWROption.sharedInstance.gameOption.startScore * 2))))
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

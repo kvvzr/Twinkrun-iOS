@@ -11,7 +11,6 @@ import CoreBluetooth
 
 class ResultViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource {
     var result: TWRResult?
-    var brightness: CGFloat?
     let dateText: String
     
     override init() {
