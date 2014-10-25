@@ -15,6 +15,7 @@
 		370CFCD219F0319900794E6D /* TWRResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6DE19E621A80035069C /* TWRResult.swift */; };
 		370CFCD319F0319C00794E6D /* TWROptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6E019E621BE0035069C /* TWROptions.swift */; };
 		370CFCD519F0323200794E6D /* TWRPlayerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370CFCD419F0323200794E6D /* TWRPlayerTest.swift */; };
+		8F00015319FB7A310027FC9F /* Pods-acknowledgements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8F00015219FB7A310027FC9F /* Pods-acknowledgements.plist */; };
 		8F08D6AF19E609720035069C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6AE19E609720035069C /* AppDelegate.swift */; };
 		8F08D6B119E609720035069C /* TitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6B019E609720035069C /* TitleViewController.swift */; };
 		8F08D6B419E609720035069C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F08D6B219E609720035069C /* Main.storyboard */; };
@@ -55,6 +56,7 @@
 		37B020C419F93E6C0065B5D7 /* libPods-BEMSimpleLineGraph.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-BEMSimpleLineGraph.a"; path = "Pods/build/Debug-iphoneos/libPods-BEMSimpleLineGraph.a"; sourceTree = "<group>"; };
 		68FBE0071247A5F4A9D3130E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		8287D9AE1A2BC4E166E6EA08 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F00015219FB7A310027FC9F /* Pods-acknowledgements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Pods-acknowledgements.plist"; path = "Pods/Target Support Files/Pods/Pods-acknowledgements.plist"; sourceTree = SOURCE_ROOT; };
 		8F08D6A919E609720035069C /* Twinkrun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twinkrun.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F08D6AD19E609720035069C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F08D6AE19E609720035069C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				8F08D6AD19E609720035069C /* Info.plist */,
+				8F00015219FB7A310027FC9F /* Pods-acknowledgements.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F781DF019F90E360048C841 /* score-transition.mp3 in Resources */,
+				8F00015319FB7A310027FC9F /* Pods-acknowledgements.plist in Resources */,
 				8F08D6B419E609720035069C /* Main.storyboard in Resources */,
 				8F781DEF19F90E360048C841 /* count-down.mp3 in Resources */,
 				8F08D6B919E609720035069C /* LaunchScreen.xib in Resources */,

@@ -30,7 +30,8 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
                 SettingType.PushView(title: "Introduction", { navigationController in
                 }),
                 SettingType.PushView(title: "License", { navigationController in
-                    navigationController.pushViewController(VTAcknowledgementsViewController(), animated: true)
+                    let path = NSBundle.mainBundle().pathForResource("Pods-acknowledgements", ofType: "plist")
+                    navigationController.pushViewController(VTAcknowledgementsViewController(acknowledgementsPlistPath: path), animated: true)
                 })
             ]
         ]
