@@ -12,9 +12,21 @@ import CoreBluetooth
 class ResultViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource {
     var result: TWRResult?
     var brightness: CGFloat?
+    let dateText: String
+    
+    override init() {
+        dateText = NSDateFormatter.localizedStringFromDate(NSDate(), dateStyle: .MediumStyle, timeStyle: .ShortStyle)
+        super.init(style: UITableViewStyle.Plain)
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        dateText = NSDateFormatter.localizedStringFromDate(NSDate(), dateStyle: .MediumStyle, timeStyle: .ShortStyle)
+        super.init(coder: aDecoder)
+    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
         
         navigationController!.setNavigationBarHidden(false, animated: animated)
     }
@@ -31,6 +43,17 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
         tableView.separatorInset = UIEdgeInsetsZero
         
         tableView.layoutIfNeeded()
+        
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        let path = documentsPath.stringByAppendingPathComponent("TWRResultData")
+        var data = NSKeyedUnarchiver.unarchiveObjectWithFile(path) as? [String: TWRResult]
+        if (data == nil) {
+            data = [:]
+        }
+        data![dateText] = result
+        println(data)
+        
+        NSKeyedArchiver.archiveRootObject(data!, toFile: path)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -62,7 +85,7 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
         
         var view = cell.viewWithTag(1)!
         
-        var roleCount = result!.scores.count
+        var roleCount = result!.scores!.count
         var graphColor = result!.score < 1000 ? UIColor.twinkrunRed() : UIColor.twinkrunGreen()
         var gradient = CAGradientLayer()
         gradient.frame = view.bounds
@@ -87,7 +110,6 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
         graph.colorBottom = UIColor.whiteColor().colorWithAlphaComponent(0.2)
         graph.colorLine = UIColor.whiteColor()
         
-        var dateText = NSDateFormatter.localizedStringFromDate(NSDate(), dateStyle: .MediumStyle, timeStyle: .ShortStyle)
         var dateLabel = cell.viewWithTag(3) as UILabel
         dateLabel.text = dateText
         

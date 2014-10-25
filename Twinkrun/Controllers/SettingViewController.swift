@@ -159,5 +159,7 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
     
     func onChangePlayerName(textField: UITextField) {
         option.playerName = textField.text
+        NSUserDefaults.standardUserDefaults().setObject(option.playerName, forKey: "playerName")
+        NSUserDefaults.standardUserDefaults().synchronize()
     }
 }
