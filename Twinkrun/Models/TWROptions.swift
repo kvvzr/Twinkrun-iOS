@@ -23,7 +23,7 @@ extension UIColor {
     }
 }
 
-class TWRRole: NSCoding, Hashable {
+class TWRRole: NSObject, NSCoding, Hashable {
     let name: NSString
     let count: UInt, time: UInt, score: Float
     let color: UIColor
@@ -64,13 +64,13 @@ class TWRRole: NSCoding, Hashable {
         return TWRRole(name: "Black", color: UIColor.twinkrunBlack(), count: count, time: time, score: score)
     }
     
-    var hashValue: Int {
+    override var hashValue: Int {
         get {
             return "\(name),\(count),\(time),\(score),\(color)".hashValue
         }
     }
     
-    var description: String {
+    override var description: String {
         return "TWRRole \(name) \(count) \(time) \(score)"
     }
 }
@@ -98,7 +98,7 @@ class TWROption {
     }
 }
 
-class TWRGameOption {
+class TWRGameOption: NSObject, NSCoding {
     var scanInterval: Float = 0.2
     var startScore = 1000
     var flashTime: UInt = 1
@@ -110,6 +110,29 @@ class TWRGameOption {
         TWRRole.black(count: 3, time: 3, score: 0)
     ]
     var randomChange = true
+    
+    override init() {
+        super.init()
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        self.scanInterval = aDecoder.decodeFloatForKey("scanInterval")
+        self.startScore = aDecoder.decodeIntegerForKey("startScore")
+        self.flashTime = UInt(aDecoder.decodeIntegerForKey("flashTime"))
+        self.flashCount = UInt(aDecoder.decodeIntegerForKey("flashCount"))
+        self.countTime = UInt(aDecoder.decodeIntegerForKey("countTime"))
+        self.roles = aDecoder.decodeObjectForKey("roles") as [TWRRole]
+        self.randomChange = aDecoder.decodeBoolForKey("randomChange")
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeFloat(scanInterval, forKey: "scanInterval")
+        aCoder.encodeInteger(Int(startScore), forKey: "startScore")
+        aCoder.encodeInteger(Int(flashCount), forKey: "flashCount")
+        aCoder.encodeInteger(Int(countTime), forKey: "countTime")
+        aCoder.encodeObject(roles, forKey: "roles")
+        aCoder.encodeBool(randomChange, forKey: "randomChange")
+    }
     
     func gameTime() -> UInt {
         var time: UInt = 0

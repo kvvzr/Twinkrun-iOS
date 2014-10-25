@@ -34,7 +34,7 @@ class TWRResult: NSObject, NSCoding, BEMSimpleLineGraphDelegate, BEMSimpleLineGr
         self.player = aDecoder.decodeObjectForKey("player") as TWRPlayer
         self.others = aDecoder.decodeObjectForKey("others") as [TWRPlayer]
         self.flattenScores = aDecoder.decodeObjectForKey("scores") as [Int]
-        self.score = aDecoder.decodeIntegerForKey("score") as Int
+        self.score = aDecoder.decodeIntegerForKey("score")
         self.option = aDecoder.decodeObjectForKey("option") as TWRGameOption
     }
     
@@ -42,7 +42,7 @@ class TWRResult: NSObject, NSCoding, BEMSimpleLineGraphDelegate, BEMSimpleLineGr
         aCoder.encodeObject(player, forKey: "player")
         aCoder.encodeObject(others, forKey: "others")
         aCoder.encodeObject(flattenScores, forKey: "scores")
-        aCoder.encodeObject(score, forKey: "score")
+        aCoder.encodeInteger(score, forKey: "score")
         aCoder.encodeObject(option, forKey: "option")
     }
     
