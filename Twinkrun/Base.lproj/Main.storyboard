@@ -62,7 +62,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="235"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Twinkrun" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAx-3D-Qo7">
-                                        <rect key="frame" x="16" y="71.5" width="288" height="92"/>
+                                        <rect key="frame" x="16" y="72" width="288" height="92"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="92" id="8bX-1A-ZaZ"/>
                                             <constraint firstAttribute="width" constant="288" id="VAo-gi-dti"/>
@@ -288,7 +288,7 @@
                                 </connections>
                             </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nwy-3H-Gj5">
-                                <rect key="frame" x="79.5" y="203" width="161" height="161"/>
+                                <rect key="frame" x="80" y="203" width="161" height="161"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="161" id="Cdl-ax-3jb"/>
                                     <constraint firstAttribute="height" constant="161" id="udZ-uX-g1P"/>

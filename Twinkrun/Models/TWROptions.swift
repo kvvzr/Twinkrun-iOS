@@ -105,9 +105,9 @@ class TWRGameOption: NSObject, NSCoding {
     var flashCount: UInt = 4
     var countTime: UInt = 5
     var roles: [TWRRole] = [
-        TWRRole.red(count: 4, time: 3, score: -10),
-        TWRRole.green(count: 3, time: 3, score: 20),
-        TWRRole.black(count: 3, time: 3, score: 0)
+        TWRRole.black(count: 3, time: 3, score: 0),
+        TWRRole.red(count: 4, time: 3, score: -30),
+        TWRRole.green(count: 3, time: 3, score: 80)
     ]
     var randomChange = true
     

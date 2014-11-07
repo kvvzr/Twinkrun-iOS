@@ -43,7 +43,7 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
         tableView.layoutIfNeeded()
         
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        let path = documentsPath.stringByAppendingPathComponent("TWRResultData")
+        let path = documentsPath.stringByAppendingPathComponent("TWRResultData2")
         var data = NSKeyedUnarchiver.unarchiveObjectWithFile(path) as? [String: TWRResult]
         if (data == nil) {
             data = [:]
