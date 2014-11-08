@@ -112,8 +112,10 @@ class MatchViewController: UIViewController, TWRGameDelegate {
         
         UIScreen.mainScreen().brightness = brightness!
         
-        if central!.state == CBCentralManagerState.PoweredOn && peripheral!.state == CBPeripheralManagerState.PoweredOff {
+        if central!.state == CBCentralManagerState.PoweredOn {
             central!.stopScan()
+        }
+        if peripheral!.state == CBPeripheralManagerState.PoweredOn {
             peripheral!.stopAdvertising()
         }
         
