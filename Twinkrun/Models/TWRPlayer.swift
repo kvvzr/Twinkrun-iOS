@@ -15,7 +15,8 @@ class TWRPlayer: NSObject, NSCoding, Equatable {
     var name: NSString
     var colorSeed: UInt32, RSSI: Int?
     var roles: [TWRRole]?
-    var option: TWRGameOption
+    var option: TWRGameOption?
+    let version = "2.0"
     
     init(playerName: NSString, identifier: NSUUID?, colorSeed: UInt32) {
         self.name = playerName
@@ -46,29 +47,34 @@ class TWRPlayer: NSObject, NSCoding, Equatable {
     }
     
     required init(coder aDecoder: NSCoder) {
-        self.name = aDecoder.decodeObjectForKey("name") as NSString
-        self.identifier = aDecoder.decodeObjectForKey("identifier") as? NSUUID
-        self.colorSeed = UInt32(aDecoder.decodeIntegerForKey("colorSeed"))
-        self.option = TWROption.sharedInstance.gameOption
-        
         playWith = true
         countedScore = false
         
-        super.init()
-        
-        createRoleList()
+        if let version = aDecoder.decodeObjectForKey("version") as? String {
+            self.name = aDecoder.decodeObjectForKey("name") as NSString
+            self.identifier = aDecoder.decodeObjectForKey("identifier") as? NSUUID
+            self.colorSeed = UInt32(aDecoder.decodeIntegerForKey("colorSeed"))
+            super.init()
+            
+            createRoleList()
+        } else {
+            self.name = aDecoder.decodeObjectForKey("playerName") as NSString
+            self.colorSeed = UInt32((aDecoder.decodeObjectForKey("colorListSeed") as NSNumber).integerValue)
+            super.init()
+        }
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(name, forKey: "name")
         aCoder.encodeObject(identifier, forKey: "identifier")
         aCoder.encodeInteger(Int(colorSeed), forKey: "colorSeed")
+        aCoder.encodeObject(version, forKey: "version")
     }
     
     func createRoleList() {
         roles = []
         
-        for role in option.roles {
+        for role in option!.roles {
             for i in 0 ..< role.count {
                 roles!.append(role)
             }
@@ -85,7 +91,7 @@ class TWRPlayer: NSObject, NSCoding, Equatable {
     }
     
     func previousRole(second: UInt) -> TWRRole? {
-        var sec = second % option.gameTime()
+        var sec = second % option!.gameTime()
         var progress: UInt = 0
         
         for i in 0 ..< roles!.count {
@@ -100,7 +106,7 @@ class TWRPlayer: NSObject, NSCoding, Equatable {
     }
     
     func currentRole(second: UInt) -> TWRRole {
-        var sec = second % option.gameTime()
+        var sec = second % option!.gameTime()
         var progress: UInt = 0
         var current: TWRRole?
         

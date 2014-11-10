@@ -32,7 +32,7 @@ class HistoryViewController: UITableViewController, UITableViewDelegate, UITable
         tableView.layoutIfNeeded()
         
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        let path = documentsPath.stringByAppendingPathComponent("TWRResultData2")
+        let path = documentsPath.stringByAppendingPathComponent("TWRResultData")
         resultData = NSKeyedUnarchiver.unarchiveObjectWithFile(path) as? [String: TWRResult]
     }
     

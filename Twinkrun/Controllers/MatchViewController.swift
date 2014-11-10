@@ -133,7 +133,7 @@ class MatchViewController: UIViewController, TWRGameDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "resultSegue" {
             let controller = segue.destinationViewController as ResultViewController
-            controller.result = TWRResult(player: player!, others: others!, scores: game!.transition!, score: game!.score, option: TWROption.sharedInstance.gameOption)
+            controller.result = TWRResult(player: player!, others: others!, scores: game!.transition!, score: game!.score)
         }
     }
 }

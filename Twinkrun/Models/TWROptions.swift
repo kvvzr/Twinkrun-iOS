@@ -27,8 +27,9 @@ class TWRRole: NSObject, NSCoding, Hashable {
     let name: NSString
     let count: UInt, time: UInt, score: Float
     let color: UIColor
+    let version = "2.0"
     
-    private init(name: NSString, color: UIColor, count: UInt, time: UInt, score: Float) {
+    init(name: NSString, color: UIColor, count: UInt, time: UInt, score: Float) {
         self.name = name
         self.color = color
         self.count = count
@@ -98,7 +99,7 @@ class TWROption {
     }
 }
 
-class TWRGameOption: NSObject, NSCoding {
+class TWRGameOption {
     var scanInterval: Float = 0.2
     var startScore = 1000
     var flashTime: UInt = 1
@@ -110,29 +111,7 @@ class TWRGameOption: NSObject, NSCoding {
         TWRRole.green(count: 3, time: 3, score: 80)
     ]
     var randomChange = true
-    
-    override init() {
-        super.init()
-    }
-    
-    required init(coder aDecoder: NSCoder) {
-        self.scanInterval = aDecoder.decodeFloatForKey("scanInterval")
-        self.startScore = aDecoder.decodeIntegerForKey("startScore")
-        self.flashTime = UInt(aDecoder.decodeIntegerForKey("flashTime"))
-        self.flashCount = UInt(aDecoder.decodeIntegerForKey("flashCount"))
-        self.countTime = UInt(aDecoder.decodeIntegerForKey("countTime"))
-        self.roles = aDecoder.decodeObjectForKey("roles") as [TWRRole]
-        self.randomChange = aDecoder.decodeBoolForKey("randomChange")
-    }
-    
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeFloat(scanInterval, forKey: "scanInterval")
-        aCoder.encodeInteger(Int(startScore), forKey: "startScore")
-        aCoder.encodeInteger(Int(flashCount), forKey: "flashCount")
-        aCoder.encodeInteger(Int(countTime), forKey: "countTime")
-        aCoder.encodeObject(roles, forKey: "roles")
-        aCoder.encodeBool(randomChange, forKey: "randomChange")
-    }
+    let version = "2.0"
     
     func gameTime() -> UInt {
         var time: UInt = 0
