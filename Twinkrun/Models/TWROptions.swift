@@ -11,15 +11,23 @@ import UIKit
 
 extension UIColor {
     class func twinkrunRed() -> UIColor {
-        return UIColor(red: CGFloat(1), green: CGFloat(0.255), blue: CGFloat(0.2), alpha: CGFloat(1))
+        let max = CGFloat(255)
+        return UIColor(red: CGFloat(240) / max, green: CGFloat(57) / max, blue: CGFloat(44) / max, alpha: CGFloat(1))
     }
     
     class func twinkrunGreen() -> UIColor {
-        return UIColor(red: CGFloat(0), green: CGFloat(0.81), blue: CGFloat(0.686), alpha: CGFloat(1))
+        let max = CGFloat(255)
+        return UIColor(red: CGFloat(0) / max, green: CGFloat(212) / max, blue: CGFloat(199) / max, alpha: CGFloat(1))
     }
     
     class func twinkrunBlack() -> UIColor {
-        return UIColor(red: CGFloat(0.2), green: CGFloat(0.204), blue: CGFloat(0.22), alpha: CGFloat(1))
+        let max = CGFloat(255)
+        return UIColor(red: CGFloat(38) / max, green: CGFloat(38) / max, blue: CGFloat(41) / max, alpha: CGFloat(1))
+    }
+    
+    class func twinkrunLightBlack() -> UIColor {
+        let max = CGFloat(255)
+        return UIColor(red: CGFloat(69) / max, green: CGFloat(71) / max, blue: CGFloat(82) / max, alpha: CGFloat(1))
     }
 }
 

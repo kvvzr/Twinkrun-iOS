@@ -34,6 +34,13 @@ class TitleViewController: UIViewController {
             ]
             navigationController!.navigationBar.tintColor = UIColor.whiteColor()
         }
+        var gradient = CAGradientLayer()
+        gradient.frame = view.bounds
+        gradient.colors = [
+            UIColor.twinkrunLightBlack().CGColor,
+            UIColor.twinkrunBlack().CGColor
+        ]
+        view.layer.insertSublayer(gradient, atIndex: 0)
     }
 
     override func didReceiveMemoryWarning() {
