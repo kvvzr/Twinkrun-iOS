@@ -55,8 +55,6 @@ class TWRPlayer: NSObject, NSCoding, Equatable {
             self.identifier = aDecoder.decodeObjectForKey("identifier") as? NSUUID
             self.colorSeed = UInt32(aDecoder.decodeIntegerForKey("colorSeed"))
             super.init()
-            
-            createRoleList()
         } else {
             self.name = aDecoder.decodeObjectForKey("playerName") as NSString
             self.colorSeed = UInt32((aDecoder.decodeObjectForKey("colorListSeed") as NSNumber).integerValue)
