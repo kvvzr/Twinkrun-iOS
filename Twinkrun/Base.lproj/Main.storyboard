@@ -18,9 +18,9 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hCu-VP-Omp">
-                                <rect key="frame" x="25" y="243" width="81" height="81"/>
+                                <rect key="frame" x="26" y="244" width="80" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="81" id="FfV-kU-T8Y"/>
+                                    <constraint firstAttribute="height" constant="80" id="FfV-kU-T8Y"/>
                                 </constraints>
                                 <state key="normal" image="StartButton">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -30,7 +30,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="09A-7l-y6e">
-                                <rect key="frame" x="214" y="243" width="81" height="81"/>
+                                <rect key="frame" x="214.5" y="244" width="80" height="80"/>
                                 <state key="normal" image="SettingButton">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -38,37 +38,37 @@
                                     <segue destination="ug9-1m-ZAY" kind="push" id="Wy3-Vy-48y"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2e7-DW-Wgl">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2e7-DW-Wgl">
                                 <constraints>
                                     <constraint firstAttribute="height" id="5nM-zU-4zC"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="94C-Bp-zpl">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="94C-Bp-zpl">
                                 <constraints>
                                     <constraint firstAttribute="height" id="5OW-Uc-dl1"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vD8-Cg-NTh">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vD8-Cg-NTh">
                                 <constraints>
                                     <constraint firstAttribute="height" id="uZ8-xx-95M"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xzs-kf-8Re">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xzs-kf-8Re">
                                 <constraints>
                                     <constraint firstAttribute="height" id="JGs-ID-gpz"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="klX-cp-tHq">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="235"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="236.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Twinkrun" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAx-3D-Qo7">
-                                        <rect key="frame" x="16" y="72" width="288" height="92"/>
+                                        <rect key="frame" x="16" y="72.5" width="288" height="92"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="92" id="8bX-1A-ZaZ"/>
                                             <constraint firstAttribute="width" constant="288" id="VAo-gi-dti"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="80"/>
-                                        <color key="textColor" red="0.26037079095840454" green="0.26535320281982422" blue="0.28284257650375366" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -78,7 +78,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0HG-Hx-72R">
-                                <rect key="frame" x="120" y="243" width="81" height="81"/>
+                                <rect key="frame" x="121" y="244" width="80" height="80"/>
                                 <state key="normal" image="HistoryButton">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -87,7 +87,6 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.99987119440000005" green="0.99998223779999995" blue="0.99984115360000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="vD8-Cg-NTh" firstAttribute="width" secondItem="Xzs-kf-8Re" secondAttribute="width" id="6lA-5z-aGa"/>
                             <constraint firstItem="Xzs-kf-8Re" firstAttribute="leading" secondItem="09A-7l-y6e" secondAttribute="trailing" constant="-295" id="AIg-cW-9t9"/>
@@ -418,9 +417,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="HistoryButton" width="81" height="81"/>
-        <image name="SettingButton" width="81" height="81"/>
-        <image name="StartButton" width="81" height="81"/>
+        <image name="HistoryButton" width="80" height="80"/>
+        <image name="SettingButton" width="80" height="80"/>
+        <image name="StartButton" width="80" height="80"/>
         <image name="StartMatchButton" width="160" height="160"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

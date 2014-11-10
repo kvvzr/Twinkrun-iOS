@@ -7,11 +7,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "twr_title_btn_01.png"
+      "filename" : "start_button.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "start_button3x.png"
     }
   ],
   "info" : {
