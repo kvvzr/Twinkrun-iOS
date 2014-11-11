@@ -92,7 +92,7 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if view is UITableViewHeaderFooterView {
             var header = view as UITableViewHeaderFooterView
-            header.contentView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
+            header.contentView.backgroundColor = UIColor.twinkrunLightBlack()
             header.textLabel.textColor = UIColor.whiteColor()
         }
     }

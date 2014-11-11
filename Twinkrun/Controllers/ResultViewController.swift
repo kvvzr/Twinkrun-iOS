@@ -11,15 +11,12 @@ import CoreBluetooth
 
 class ResultViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource {
     var result: TWRResult?
-    let dateText: String
     
     override init() {
-        dateText = NSDateFormatter.localizedStringFromDate(NSDate(), dateStyle: .MediumStyle, timeStyle: .ShortStyle)
         super.init(style: UITableViewStyle.Plain)
     }
 
     required init(coder aDecoder: NSCoder) {
-        dateText = NSDateFormatter.localizedStringFromDate(NSDate(), dateStyle: .MediumStyle, timeStyle: .ShortStyle)
         super.init(coder: aDecoder)
     }
     
@@ -44,11 +41,12 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
         
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
         let path = documentsPath.stringByAppendingPathComponent("TWRResultData2")
-        var data = NSKeyedUnarchiver.unarchiveObjectWithFile(path) as? [String: TWRResult]
+        var data = NSKeyedUnarchiver.unarchiveObjectWithFile(path) as? [TWRResult]
         if (data == nil) {
-            data = [:]
+            data = []
         }
-        data![dateText] = result
+        data!.append(result!)
+        data!.sort({$0.date.timeIntervalSinceNow > $1.date.timeIntervalSinceNow})
         
         NSKeyedArchiver.archiveRootObject(data!, toFile: path)
     }
@@ -95,20 +93,21 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
         view.layer.cornerRadius = 4
         view.clipsToBounds = true
         
-        var graph:BEMSimpleLineGraphView = cell.viewWithTag(2) as BEMSimpleLineGraphView
-        
-        graph.delegate = result!
-        graph.dataSource = result!
-        
-        graph.enablePopUpReport = true
-        graph.enableReferenceAxisLines = true
-        graph.colorBackgroundXaxis = UIColor.whiteColor()
-        graph.colorTop = UIColor.clearColor()
-        graph.colorBottom = UIColor.whiteColor().colorWithAlphaComponent(0.2)
-        graph.colorLine = UIColor.whiteColor()
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            var graph:BEMSimpleLineGraphView = cell.viewWithTag(2) as BEMSimpleLineGraphView
+            
+            graph.delegate = self.result
+            graph.dataSource = self.result
+            
+            graph.enablePopUpReport = true
+            graph.colorBackgroundXaxis = UIColor.whiteColor()
+            graph.colorTop = UIColor.clearColor()
+            graph.colorBottom = UIColor.whiteColor().colorWithAlphaComponent(0.2)
+            graph.colorLine = UIColor.whiteColor()
+        })
         
         var dateLabel = cell.viewWithTag(3) as UILabel
-        dateLabel.text = dateText
+        dateLabel.text = result!.dateText()
         
         var scoreLabel = cell.viewWithTag(4) as UILabel
         scoreLabel.text = "\(NSNumberFormatter.localizedStringFromNumber(result!.score, numberStyle: .DecimalStyle)) Point"
@@ -121,9 +120,20 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
     }
     
     @IBAction func onAction(sender: UIBarButtonItem) {
-        let contents = ["I got \(result!.score) points in this game! #twinkrun"]
+        let image = viewToImage(tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))!)
+        let contents = ["I got \(result!.score) points in this game! #twinkrun", image]
         let controller = UIActivityViewController(activityItems: contents, applicationActivities: nil)
         controller.excludedActivityTypes = [UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypePostToFlickr, UIActivityTypeSaveToCameraRoll, UIActivityTypePrint]
         presentViewController(controller, animated: true, completion: {})
+    }
+    
+    func viewToImage(view: UIView) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, UIScreen.mainScreen().scale)
+        let context = UIGraphicsGetCurrentContext()
+        view.layer.renderInContext(context)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image
     }
 }

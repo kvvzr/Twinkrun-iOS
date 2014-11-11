@@ -198,7 +198,7 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
                 if !other.isEmpty {
                     other.first!.RSSI = RSSI.integerValue
                     if other.first!.playWith && !other.first!.countedScore && RSSI.integerValue <= 0 {
-                        var point = pow(1.2, (RSSI.floatValue + 60) / 4)
+                        var point = min(pow(2, (RSSI.floatValue + 45) / 4), 5.0)
                         addScore -= Int(point * player.currentRole(current).score)
                         addScore += Int(point * other.first!.currentRole(current).score)
                         other.first!.countedScore = true
