@@ -104,7 +104,7 @@ class MatchViewController: UIViewController, TWRGameDelegate {
     }
     
     func didFlash(color: UIColor) {
-        view.backgroundColor = color
+        // view.backgroundColor = color
     }
     
     func didEndGame() {
