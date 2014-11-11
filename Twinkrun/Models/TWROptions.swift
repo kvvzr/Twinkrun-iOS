@@ -95,7 +95,7 @@ func ==(this: TWRRole, that: TWRRole) -> Bool {
 }
 
 class TWROption {
-    let advertiseUUID = "067AEFE3-371B-4D6D-877E-9C229AFBC33A"
+    let advertiseUUID = "4C866825-6CF5-48DD-8C64-D9EC109CB3E4"
     var playerName = "Twinkrunner"
     var gameOption = TWRGameOption()
     
