@@ -37,6 +37,7 @@
 		8F781DEF19F90E360048C841 /* count-down.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8F781DEC19F90E360048C841 /* count-down.mp3 */; };
 		8F781DF019F90E360048C841 /* score-transition.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8F781DED19F90E360048C841 /* score-transition.mp3 */; };
 		8F782BE719FB6E6000A5F359 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F782BE619FB6E6000A5F359 /* HistoryViewController.swift */; };
+		8F992FB01A12404F005754A9 /* RankingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F992FAF1A12404F005754A9 /* RankingView.swift */; };
 		8F9D050A19F922C6006BF582 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9D050919F922C6006BF582 /* SettingViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +85,7 @@
 		8F781DEC19F90E360048C841 /* count-down.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "count-down.mp3"; sourceTree = "<group>"; };
 		8F781DED19F90E360048C841 /* score-transition.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "score-transition.mp3"; sourceTree = "<group>"; };
 		8F782BE619FB6E6000A5F359 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		8F992FAF1A12404F005754A9 /* RankingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingView.swift; sourceTree = "<group>"; };
 		8F9D050919F922C6006BF582 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -239,6 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				8F6582E11A120729005E0370 /* ResultView.swift */,
+				8F992FAF1A12404F005754A9 /* RankingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 				8F08D6D819E618190035069C /* ArrayExtension.swift in Sources */,
 				8F08D6AF19E609720035069C /* AppDelegate.swift in Sources */,
 				370CFCCF19F0312300794E6D /* TWRPlayer.swift in Sources */,
+				8F992FB01A12404F005754A9 /* RankingView.swift in Sources */,
 				8F6582E21A120729005E0370 /* ResultView.swift in Sources */,
 				8F3D8D9D19F8E2ED00BC2B1E /* ResultViewController.swift in Sources */,
 				8F08D6DB19E621770035069C /* TWRGame.swift in Sources */,

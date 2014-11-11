@@ -14,6 +14,7 @@ class TWRPlayer: NSObject, NSCoding, Equatable {
     var playWith: Bool, countedScore: Bool
     var name: NSString
     var colorSeed: UInt32, RSSI: Int?
+    var score: Int?
     var roles: [TWRRole]?
     var option: TWRGameOption?
     let version = "2.0"
@@ -54,6 +55,7 @@ class TWRPlayer: NSObject, NSCoding, Equatable {
             self.name = aDecoder.decodeObjectForKey("name") as NSString
             self.identifier = aDecoder.decodeObjectForKey("identifier") as? NSUUID
             self.colorSeed = UInt32(aDecoder.decodeIntegerForKey("colorSeed"))
+            self.score = aDecoder.decodeIntegerForKey("score")
             super.init()
         } else {
             self.name = aDecoder.decodeObjectForKey("playerName") as NSString
@@ -66,6 +68,9 @@ class TWRPlayer: NSObject, NSCoding, Equatable {
         aCoder.encodeObject(name, forKey: "name")
         aCoder.encodeObject(identifier, forKey: "identifier")
         aCoder.encodeInteger(Int(colorSeed), forKey: "colorSeed")
+        if let score = score {
+            aCoder.encodeInteger(score, forKey: "score")
+        }
         aCoder.encodeObject(version, forKey: "version")
     }
     

@@ -32,6 +32,8 @@ class MatchViewController: UIViewController, TWRGameDelegate {
         swipe.direction = UISwipeGestureRecognizerDirection.Right
         view.addGestureRecognizer(swipe)
         
+        view.backgroundColor = UIColor.twinkrunBlack()
+        
         audio = OALSimpleAudio.sharedInstance()
         audio!.honorSilentSwitch = true
         audio!.preloadEffect("beep.mp3")
@@ -133,6 +135,7 @@ class MatchViewController: UIViewController, TWRGameDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "resultSegue" {
             let controller = segue.destinationViewController as ResultViewController
+            player!.score = game!.score
             controller.result = TWRResult(player: player!, others: others!, scores: game!.transition!, score: game!.score)
         }
     }
