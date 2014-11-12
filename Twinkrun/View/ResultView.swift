@@ -20,6 +20,10 @@ class ResultView: UIView {
     }
     
     func reload() {
+        reload(animated: true)
+    }
+    
+    func reload(#animated: Bool) {
         var gradient = CAGradientLayer()
         gradient!.frame = self.bounds
         
@@ -40,12 +44,17 @@ class ResultView: UIView {
             graph.colorLine = UIColor.whiteColor()
             graph.delegate = result
             graph.dataSource = result
+            if !animated {
+                graph.animationGraphStyle = BEMLineAnimation.None
+            }
             addSubview(graph)
             
-            var rankingTable = viewWithTag(7) as RankingView
-            rankingTable.result = result
-            rankingTable.makeRanking()
-            rankingTable.backgroundColor = UIColor.clearColor()
+            if let view = viewWithTag(7) {
+                var rankingTable = view as RankingView
+                rankingTable.result = result
+                rankingTable.makeRanking()
+                rankingTable.backgroundColor = UIColor.clearColor()
+            }
             
             var dateLabel = viewWithTag(3) as UILabel
             dateLabel.text = result.dateText()
@@ -53,11 +62,15 @@ class ResultView: UIView {
             var scoreLabel = viewWithTag(4) as UILabel
             scoreLabel.text = "\(NSNumberFormatter.localizedStringFromNumber(result.score, numberStyle: .DecimalStyle)) Point"
             
-            var backButton = viewWithTag(5) as UIButton
-            backButton.addTarget(self, action: Selector("back:"), forControlEvents: UIControlEvents.TouchUpInside)
+            if let view = viewWithTag(5) {
+                var backButton = view as UIButton
+                backButton.addTarget(self, action: Selector("back:"), forControlEvents: UIControlEvents.TouchUpInside)
+            }
             
-            var nextButton = viewWithTag(6) as UIButton
-            nextButton.addTarget(self, action: Selector("next:"), forControlEvents: UIControlEvents.TouchUpInside)
+            if let view = viewWithTag(6) {
+                var nextButton = view as UIButton
+                nextButton.addTarget(self, action: Selector("next:"), forControlEvents: UIControlEvents.TouchUpInside)
+            }
         }
     }
     

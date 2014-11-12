@@ -30,6 +30,7 @@
 		8F08D6E119E621BE0035069C /* TWROptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F08D6E019E621BE0035069C /* TWROptions.swift */; };
 		8F08D6E319E6311A0035069C /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F08D6E219E6311A0035069C /* CoreBluetooth.framework */; };
 		8F186D1119ED304300D4FB04 /* PlayerSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F186D1019ED304300D4FB04 /* PlayerSelectViewController.swift */; };
+		8F305DF81A1330160092AA7F /* ShareBoard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F305DF71A1330160092AA7F /* ShareBoard.xib */; };
 		8F3D8D9D19F8E2ED00BC2B1E /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3D8D9C19F8E2ED00BC2B1E /* ResultViewController.swift */; };
 		8F6582E21A120729005E0370 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6582E11A120729005E0370 /* ResultView.swift */; };
 		8F745B4619EFB740008A5DEE /* MatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F745B4519EFB740008A5DEE /* MatchViewController.swift */; };
@@ -77,6 +78,7 @@
 		8F08D6E019E621BE0035069C /* TWROptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWROptions.swift; sourceTree = "<group>"; };
 		8F08D6E219E6311A0035069C /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		8F186D1019ED304300D4FB04 /* PlayerSelectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerSelectViewController.swift; sourceTree = "<group>"; };
+		8F305DF71A1330160092AA7F /* ShareBoard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareBoard.xib; sourceTree = "<group>"; };
 		8F3D8D9C19F8E2ED00BC2B1E /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		8F6582E11A120729005E0370 /* ResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		8F745B4519EFB740008A5DEE /* MatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchViewController.swift; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 			children = (
 				8F6582E11A120729005E0370 /* ResultView.swift */,
 				8F992FAF1A12404F005754A9 /* RankingView.swift */,
+				8F305DF71A1330160092AA7F /* ShareBoard.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F781DF019F90E360048C841 /* score-transition.mp3 in Resources */,
+				8F305DF81A1330160092AA7F /* ShareBoard.xib in Resources */,
 				8F00015319FB7A310027FC9F /* Pods-acknowledgements.plist in Resources */,
 				8F08D6B419E609720035069C /* Main.storyboard in Resources */,
 				8F781DEF19F90E360048C841 /* count-down.mp3 in Resources */,

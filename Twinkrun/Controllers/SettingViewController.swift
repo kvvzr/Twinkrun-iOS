@@ -17,14 +17,14 @@ enum SettingType {
 }
 
 class SettingViewController: UITableViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
-    var option: TWROption
-    let settings: [String: [SettingType]]
-
-    required init(coder aDecoder: NSCoder) {
+    var option: TWROption?
+    var settings: [String: [SettingType]]?
+    
+    override func viewWillAppear(animated: Bool) {
         option = TWROption.sharedInstance
         settings = [
             "Player Name": [
-                SettingType.Input(defaultValue: option.playerName, onChange: "onChangePlayerName:")
+                SettingType.Input(defaultValue: option!.playerName, onChange: "onChangePlayerName:")
             ],
             "Help": [
                 SettingType.PushView(title: "Introduction", { navigationController in
@@ -35,27 +35,26 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
                 })
             ]
         ]
-        
-        super.init(coder: aDecoder)
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        navigationController!.setNavigationBarHidden(false, animated: animated)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let font = UIFont(name: "HelveticaNeue-Light", size: 22)
+        if let font = font {
+            navigationController!.navigationBar.barTintColor = UIColor.twinkrunGreen()
+            navigationController!.navigationBar.titleTextAttributes = [
+                NSForegroundColorAttributeName: UIColor.whiteColor(),
+                NSFontAttributeName: font
+            ]
+            navigationController!.navigationBar.tintColor = UIColor.whiteColor()
+        }
         
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundView = nil
         tableView.backgroundColor = UIColor.twinkrunBlack()
         tableView.tableFooterView = UIView(frame: CGRectZero)
-        tableView.layoutMargins = UIEdgeInsetsZero
-        
-        tableView.layoutIfNeeded()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -67,12 +66,18 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return settings.count
+        if let settings = settings {
+            return settings.count
+        }
+        return 0
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let key = settings.keys.array[section]
-        return settings[key]!.count
+        if let settings = settings {
+            let key = settings.keys.array[section]
+            return settings[key]!.count
+        }
+        return 0
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -80,7 +85,10 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return settings.keys.array[section]
+        if let settings = settings {
+            return settings.keys.array[section]
+        }
+        return ""
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -98,16 +106,15 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let key = settings.keys.array[indexPath.section]
-        let setting = settings[key]![indexPath.row]
+        let key = settings!.keys.array[indexPath.section]
+        let setting = settings![key]![indexPath.row]
         
         switch setting {
         case .Input(defaultValue: let value, onChange: let onChange):
             var cell = tableView.dequeueReusableCellWithIdentifier("inputCell") as UITableViewCell
             
             cell.backgroundColor = UIColor.twinkrunBlack()
-            cell.layoutMargins = UIEdgeInsetsZero
-            cell.separatorInset = UIEdgeInsetsZero
+            cell.selectionStyle = .None
             
             var field = cell.viewWithTag(1) as UITextField
             field.attributedPlaceholder = NSAttributedString(
@@ -128,8 +135,6 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
             var cell = UITableViewCell()
             
             cell.backgroundColor = UIColor.twinkrunBlack()
-            cell.layoutMargins = UIEdgeInsetsZero
-            cell.separatorInset = UIEdgeInsetsZero
             cell.tintColor = UIColor.whiteColor()
             cell.textLabel.textColor = UIColor.whiteColor()
             cell.textLabel.text = title
@@ -139,8 +144,8 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let key = settings.keys.array[indexPath.section]
-        let setting = settings[key]![indexPath.row]
+        let key = settings!.keys.array[indexPath.section]
+        let setting = settings![key]![indexPath.row]
         
         switch setting {
         case .Input(defaultValue: let value, onChange: let onChange):
@@ -159,8 +164,8 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
     }
     
     func onChangePlayerName(textField: UITextField) {
-        option.playerName = textField.text
-        NSUserDefaults.standardUserDefaults().setObject(option.playerName, forKey: "playerName")
+        option!.playerName = textField.text
+        NSUserDefaults.standardUserDefaults().setObject(option!.playerName, forKey: "playerName")
         NSUserDefaults.standardUserDefaults().synchronize()
     }
 }

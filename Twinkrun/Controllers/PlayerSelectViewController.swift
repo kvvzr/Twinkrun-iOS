@@ -17,9 +17,13 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
     var peripheralManager: CBPeripheralManager?
     var option: TWROption?
     var brightness: CGFloat = 1.0
+    var onMatch = false
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        centralManager = CBCentralManager(delegate: self, queue: nil)
+        peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
         
         if let central = centralManager {
             central.delegate = self
@@ -29,36 +33,53 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
             peripheral.delegate = self
         }
         
-        navigationController!.setNavigationBarHidden(false, animated: animated)
+        onMatch = false
+        
+        readyButton.enabled = false
+        
+        option = TWROption.sharedInstance
+        player = TWRPlayer(playerName: option!.playerName, identifier: nil, colorSeed: arc4random())
+        others = []
+        brightness = UIScreen.mainScreen().brightness
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        centralManager = CBCentralManager(delegate: self, queue: nil)
-        peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
-        option = TWROption.sharedInstance
-        
-        player = TWRPlayer(playerName: option!.playerName, identifier: nil, colorSeed: arc4random())
-        others = []
-        brightness = UIScreen.mainScreen().brightness
+        let font = UIFont(name: "HelveticaNeue-Light", size: 22)
+        if let font = font {
+            navigationController!.navigationBar.barTintColor = UIColor.twinkrunGreen()
+            navigationController!.navigationBar.titleTextAttributes = [
+                NSForegroundColorAttributeName: UIColor.whiteColor(),
+                NSFontAttributeName: font
+            ]
+            navigationController!.navigationBar.tintColor = UIColor.whiteColor()
+        }
         
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundView = nil
         tableView.backgroundColor = UIColor.twinkrunBlack()
         tableView.tableFooterView = UIView(frame: CGRectZero)
-        tableView.separatorInset = UIEdgeInsetsZero
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        //centralManager?.stopScan()
-        //peripheralManager?.stopAdvertising()
-        
-        navigationController!.setNavigationBarHidden(true, animated: animated)
+        if !onMatch {
+            if let central = centralManager {
+                if central.state == CBCentralManagerState.PoweredOn {
+                    central.stopScan()
+                }
+            }
+            
+            if let peripheral = peripheralManager {
+                if peripheral.state == CBPeripheralManagerState.PoweredOff {
+                    peripheral.stopAdvertising()
+                }
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -71,26 +92,14 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return others!.count
+        if let others = others {
+            return others.count
+        }
+        return 0
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 48
-    }
-    
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if tableView.respondsToSelector(Selector("separatorInset")) {
-            tableView.separatorInset = UIEdgeInsetsZero
-        }
-        if tableView.respondsToSelector(Selector("layoutMargins")) {
-            tableView.layoutMargins = UIEdgeInsetsZero
-        }
-        if cell.respondsToSelector(Selector("separatorInset")) {
-            cell.separatorInset = UIEdgeInsetsZero
-        }
-        if cell.respondsToSelector(Selector("layoutMargins")) {
-            cell.layoutMargins = UIEdgeInsetsZero
-        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -164,6 +173,10 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
             controller.central = centralManager
             controller.peripheral = peripheralManager
             controller.brightness = brightness
+            controller.hidesBottomBarWhenPushed = true
+            
+            onMatch = true
+            navigationController!.setNavigationBarHidden(true, animated: true)
         }
     }
 }

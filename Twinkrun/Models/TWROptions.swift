@@ -116,8 +116,8 @@ class TWRGameOption {
     var countTime: UInt = 5
     var roles: [TWRRole] = [
         TWRRole.black(count: 3, time: 3, score: 0),
-        TWRRole.red(count: 4, time: 3, score: -30),
-        TWRRole.green(count: 3, time: 3, score: 80)
+        TWRRole.red(count: 4, time: 3, score: -40),
+        TWRRole.green(count: 3, time: 3, score: 40)
     ]
     var randomChange = true
     let version = "2.0"

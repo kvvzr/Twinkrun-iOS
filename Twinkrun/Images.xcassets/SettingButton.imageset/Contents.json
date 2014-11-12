@@ -7,12 +7,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "setting_button.png"
+      "filename" : "setting_tab_2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "setting_button3x.png"
+      "filename" : "setting_tab_3x.png"
     }
   ],
   "info" : {

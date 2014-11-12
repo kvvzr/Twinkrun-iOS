@@ -14,42 +14,20 @@ extension UINavigationController {
     }
 }
 
-class TitleViewController: UIViewController {
+class TWRTabBarController: UITabBarController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        navigationController!.setNavigationBarHidden(true, animated: animated)
+        UITabBar.appearance().barTintColor = UIColor.twinkrunBlack()
+        UITabBar.appearance().tintColor = UIColor.whiteColor()
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState: UIControlState.Selected)
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(0.2)], forState: UIControlState.Normal)
+        
+        UIToolbar.appearance().barTintColor = UIColor.twinkrunBlack()
+        UIToolbar.appearance().tintColor = UIColor.whiteColor()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        let font = UIFont(name: "HelveticaNeue-Light", size: 22)
-        if let font = font {
-            navigationController!.navigationBar.barTintColor = UIColor.twinkrunGreen()
-            navigationController!.navigationBar.titleTextAttributes = [
-                NSForegroundColorAttributeName: UIColor.whiteColor(),
-                NSFontAttributeName: font
-            ]
-            navigationController!.navigationBar.tintColor = UIColor.whiteColor()
-        }
-        var gradient = CAGradientLayer()
-        gradient.frame = view.bounds
-        gradient.colors = [
-            UIColor.twinkrunLightBlack().CGColor,
-            UIColor.twinkrunBlack().CGColor
-        ]
-        view.layer.insertSublayer(gradient, atIndex: 0)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
     }
 }
-

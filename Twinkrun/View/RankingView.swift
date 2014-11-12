@@ -73,6 +73,7 @@ class RankingView: UITableView, UITableViewDelegate, UITableViewDataSource {
         var cell = tableView.dequeueReusableCellWithIdentifier("scoreCell")! as UITableViewCell
         
         cell.backgroundColor = UIColor.clearColor()
+        cell.selectionStyle = .None
         
         if let ranking = ranking {
             var nameLabel = cell.viewWithTag(8) as UILabel
