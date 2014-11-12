@@ -75,11 +75,11 @@ class RankingView: UITableView, UITableViewDelegate, UITableViewDataSource {
         cell.backgroundColor = UIColor.clearColor()
         
         if let ranking = ranking {
-            var nameLabel = cell.viewWithTag(1) as UILabel
+            var nameLabel = cell.viewWithTag(8) as UILabel
             nameLabel.text = ranking[indexPath.row].name
             nameLabel.textColor = UIColor.whiteColor()
             
-            var scoreLabel = cell.viewWithTag(2) as UILabel
+            var scoreLabel = cell.viewWithTag(9) as UILabel
             if let score = ranking[indexPath.row].score {
                 scoreLabel.text = "\(NSNumberFormatter.localizedStringFromNumber(score, numberStyle: .DecimalStyle)) Point"
             } else {

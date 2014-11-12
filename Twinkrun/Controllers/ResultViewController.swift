@@ -51,17 +51,6 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
         tableView.separatorInset = UIEdgeInsetsZero
         
         tableView.layoutIfNeeded()
-        
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        let path = documentsPath.stringByAppendingPathComponent("TWRResultData2")
-        var data = NSKeyedUnarchiver.unarchiveObjectWithFile(path) as? [TWRResult]
-        if (data == nil) {
-            data = []
-        }
-        data!.append(result!)
-        data!.sort({$0.date.timeIntervalSinceNow > $1.date.timeIntervalSinceNow})
-        
-        NSKeyedArchiver.archiveRootObject(data!, toFile: path)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -73,6 +62,17 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
         if peripheralManager!.state == CBPeripheralManagerState.PoweredOn {
             peripheralManager!.stopAdvertising()
         }
+        
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        let path = documentsPath.stringByAppendingPathComponent("TWRResultData2")
+        var data = NSKeyedUnarchiver.unarchiveObjectWithFile(path) as? [TWRResult]
+        if (data == nil) {
+            data = []
+        }
+        data!.append(result!)
+        data!.sort({$0.date.timeIntervalSinceNow > $1.date.timeIntervalSinceNow})
+        
+        NSKeyedArchiver.archiveRootObject(data!, toFile: path)
     }
     
     override func didReceiveMemoryWarning() {
