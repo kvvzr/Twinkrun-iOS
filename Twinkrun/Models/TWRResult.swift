@@ -18,6 +18,7 @@ class TWRResult: NSObject, NSCoding, BEMSimpleLineGraphDelegate, BEMSimpleLineGr
     let maxScore: Int, minScore: Int
     let roles: [TWRRole]
     let version = "2.0"
+    var focusOnGraph = true
     
     init(player: TWRPlayer, others: [TWRPlayer], scores: Array<(role: TWRRole, scores: [Int])>, score: Int) {
         self.date = NSDate()

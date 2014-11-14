@@ -28,7 +28,7 @@ class ResultView: UIView {
         gradient!.frame = self.bounds
         
         gradient!.colors = [
-            UIColor.twinkrunLightBlack().colorWithAlphaComponent(0.2).CGColor,
+            UIColor.twinkrunBlack().colorWithAlphaComponent(0.2).CGColor,
             UIColor.twinkrunLightBlack().CGColor
         ]
         layer.insertSublayer(gradient!, atIndex: 0)
@@ -47,6 +47,7 @@ class ResultView: UIView {
             if !animated {
                 graph.animationGraphStyle = BEMLineAnimation.None
             }
+            graph.reloadGraph()
             addSubview(graph)
             
             if let view = viewWithTag(7) {
@@ -71,10 +72,16 @@ class ResultView: UIView {
                 var nextButton = view as UIButton
                 nextButton.addTarget(self, action: Selector("next:"), forControlEvents: UIControlEvents.TouchUpInside)
             }
+            
+            if result.focusOnGraph {
+                back(nil)
+            } else {
+                next(nil)
+            }
         }
     }
     
-    func back(sender: UIButton) {
+    func back(sender: UIButton?) {
         var backButton = viewWithTag(5) as UIButton
         backButton.enabled = false
         
@@ -86,9 +93,13 @@ class ResultView: UIView {
         
         var rankingTable = viewWithTag(7) as RankingView
         rankingTable.hidden = true
+        
+        if let result = result {
+            result.focusOnGraph = true
+        }
     }
     
-    func next(sender: UIButton) {
+    func next(sender: UIButton?) {
         var backButton = viewWithTag(5) as UIButton
         backButton.enabled = true
         
@@ -100,5 +111,9 @@ class ResultView: UIView {
         
         var rankingTable = viewWithTag(7) as RankingView
         rankingTable.hidden = false
+        
+        if let result = result {
+            result.focusOnGraph = false
+        }
     }
 }

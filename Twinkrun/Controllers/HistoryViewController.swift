@@ -14,6 +14,18 @@ class HistoryViewController: UITableViewController, UITableViewDelegate, UITable
     var toolbar: UIToolbar?
     var selectedRows: [Int] = []
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+        let path = documentsPath.stringByAppendingPathComponent("TWRResultData2")
+        resultData = NSKeyedUnarchiver.unarchiveObjectWithFile(path) as? [TWRResult]
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            self.tableView.reloadData()
+        })
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,10 +59,6 @@ class HistoryViewController: UITableViewController, UITableViewDelegate, UITable
         ]
         toolbar!.hidden = true
         tabBarController!.tabBar.superview!.addSubview(toolbar!)
-        
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        let path = documentsPath.stringByAppendingPathComponent("TWRResultData2")
-        resultData = NSKeyedUnarchiver.unarchiveObjectWithFile(path) as? [TWRResult]
     }
     
     override func didReceiveMemoryWarning() {
@@ -74,14 +82,15 @@ class HistoryViewController: UITableViewController, UITableViewDelegate, UITable
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("resultCell") as UITableViewCell
-        
         cell.backgroundColor = UIColor.clearColor()
         cell.selectedBackgroundView = UIView()
         cell.selectedBackgroundView.backgroundColor = UIColor.clearColor()
         
-        var view = cell.viewWithTag(1)! as ResultView
-        view.result = resultData![indexPath.row]
-        view.reload()
+        dispatch_async(dispatch_get_main_queue(), {
+            var view = cell.viewWithTag(1)! as ResultView
+            view.result = self.resultData![indexPath.row]
+            view.reload()
+        })
         
         return cell
     }

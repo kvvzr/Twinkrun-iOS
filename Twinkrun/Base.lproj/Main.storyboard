@@ -100,10 +100,9 @@
                                         <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e9H-bs-hnH" customClass="ResultView" customModule="Twinkrun" customModuleProvider="target">
                                             <rect key="frame" x="8" y="8" width="304" height="224"/>
                                             <subviews>
-                                                <view tag="9" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I1Z-Dp-HAj">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="1px_white" translatesAutoresizingMaskIntoConstraints="NO" id="3ee-Ff-43m">
                                                     <rect key="frame" x="0.0" y="48" width="304" height="1"/>
-                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
-                                                </view>
+                                                </imageView>
                                                 <view tag="2" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2gf-qO-HPP" customClass="BEMSimpleLineGraphView">
                                                     <rect key="frame" x="0.0" y="48" width="304" height="176"/>
                                                 </view>
@@ -433,6 +432,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="1px_white" width="1" height="1"/>
         <image name="HistoryButton" width="30" height="30"/>
         <image name="SettingButton" width="30" height="30"/>
         <image name="StartButton" width="30" height="30"/>

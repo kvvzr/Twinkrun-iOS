@@ -50,6 +50,7 @@ class RankingView: UITableView, UITableViewDelegate, UITableViewDataSource {
             ranking = tmp.filter({ $0.score != nil })
             ranking!.sort({ $0.score > $1.score })
             ranking! += tmp.filter({ $0.score == nil })
+            reloadData()
         }
     }
     

@@ -35,6 +35,10 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
                 })
             ]
         ]
+        
+        if let indexPath = tableView.indexPathForSelectedRow() {
+            tableView.deselectRowAtIndexPath(indexPath, animated: animated)
+        }
     }
     
     override func viewDidLoad() {
