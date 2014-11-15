@@ -125,7 +125,7 @@ class MatchViewController: UIViewController, TWRGameDelegate {
     }
     
     func pitch(score: Int) -> Float {
-        return min(1.0, max(0.0, Float(score) / Float(TWROption.sharedInstance.gameOption.startScore * 2) + 0.3))
+        return min(2.0, max(0.0, Float(score) / Float(TWROption.sharedInstance.gameOption.startScore * 2) + 0.3))
     }
     
     func scoreToBrightness(score: Int) -> CGFloat {
