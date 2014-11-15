@@ -24,12 +24,28 @@ class ResultView: UIView {
     }
     
     func reload(#animated: Bool) {
+        for sublayer in layer.sublayers {
+            if sublayer is CAGradientLayer {
+                sublayer.removeFromSuperlayer()
+            }
+        }
+        
         var gradient = CAGradientLayer()
         gradient!.frame = self.bounds
         
+        var gradientColor = UIColor.twinkrunLightBlack()
+        if let result = result {
+            let rank = result.rank(result.player)
+            if rank == 0 {
+                gradientColor = UIColor.twinkrunGreen()
+            } else if rank == result.others.count {
+                gradientColor = UIColor.twinkrunRed()
+            }
+        }
+        
         gradient!.colors = [
-            UIColor.twinkrunBlack().colorWithAlphaComponent(0.2).CGColor,
-            UIColor.twinkrunLightBlack().CGColor
+            UIColor.clearColor(),
+            gradientColor.CGColor
         ]
         layer.insertSublayer(gradient!, atIndex: 0)
         layer.cornerRadius = 4
@@ -37,18 +53,18 @@ class ResultView: UIView {
         
         if let result = result {
             var graph = viewWithTag(2) as BEMSimpleLineGraphView
+            graph.delegate = result
+            graph.dataSource = result
             graph.enablePopUpReport = true
             graph.colorBackgroundXaxis = UIColor.whiteColor()
             graph.colorTop = UIColor.clearColor()
-            graph.colorBottom = UIColor.whiteColor().colorWithAlphaComponent(0.2)
+            graph.colorBottom = UIColor.whiteColor().colorWithAlphaComponent(0.5)
             graph.colorLine = UIColor.whiteColor()
-            graph.delegate = result
-            graph.dataSource = result
+            graph.colorTouchInputLine = UIColor.whiteColor().colorWithAlphaComponent(0.5)
             if !animated {
                 graph.animationGraphStyle = BEMLineAnimation.None
             }
             graph.reloadGraph()
-            addSubview(graph)
             
             if let view = viewWithTag(7) {
                 var rankingTable = view as RankingView
@@ -82,17 +98,23 @@ class ResultView: UIView {
     }
     
     func back(sender: UIButton?) {
-        var backButton = viewWithTag(5) as UIButton
-        backButton.enabled = false
+        if let view = viewWithTag(5) {
+            var backButton = view as UIButton
+            backButton.enabled = false
+        }
         
-        var nextButton = viewWithTag(6) as UIButton
-        nextButton.enabled = true
+        if let view = viewWithTag(6) {
+            var nextButton = view as UIButton
+            nextButton.enabled = true
+        }
         
         var graph = viewWithTag(2) as BEMSimpleLineGraphView
         graph.hidden = false
         
-        var rankingTable = viewWithTag(7) as RankingView
-        rankingTable.hidden = true
+        if let view = viewWithTag(7) {
+            var rankingTable = view as RankingView
+            rankingTable.hidden = true
+        }
         
         if let result = result {
             result.focusOnGraph = true
@@ -100,17 +122,23 @@ class ResultView: UIView {
     }
     
     func next(sender: UIButton?) {
-        var backButton = viewWithTag(5) as UIButton
-        backButton.enabled = true
+        if let view = viewWithTag(5) {
+            var backButton = view as UIButton
+            backButton.enabled = true
+        }
         
-        var nextButton = viewWithTag(6) as UIButton
-        nextButton.enabled = false
+        if let view = viewWithTag(6) {
+            var nextButton = view as UIButton
+            nextButton.enabled = false
+        }
         
         var graph = viewWithTag(2) as BEMSimpleLineGraphView
         graph.hidden = true
         
-        var rankingTable = viewWithTag(7) as RankingView
-        rankingTable.hidden = false
+        if let view = viewWithTag(7) {
+            var rankingTable = view as RankingView
+            rankingTable.hidden = false
+        }
         
         if let result = result {
             result.focusOnGraph = false
