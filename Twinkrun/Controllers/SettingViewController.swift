@@ -27,8 +27,8 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
                 SettingType.Input(defaultValue: option!.playerName, onChange: "onChangePlayerName:")
             ],
             "Help": [
-                SettingType.PushView(title: "Introduction", { navigationController in
-                }),
+                /*SettingType.PushView(title: "Introduction", { navigationController in
+                }),*/
                 SettingType.PushView(title: "License", { navigationController in
                     let path = NSBundle.mainBundle().pathForResource("Pods-acknowledgements", ofType: "plist")
                     navigationController.pushViewController(VTAcknowledgementsViewController(acknowledgementsPlistPath: path), animated: true)
