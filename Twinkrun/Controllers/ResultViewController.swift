@@ -102,25 +102,28 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
             var view = cell.viewWithTag(1)!
             
             var roleCount = result!.roles.count
-            var graphColor = result!.score < 1000 ? UIColor.twinkrunRed() : UIColor.twinkrunGreen()
             var gradient = CAGradientLayer()
-            gradient.frame = view.bounds
-            gradient.colors = [
-                graphColor.colorWithAlphaComponent(0.2).CGColor,
-                graphColor.CGColor
+            gradient!.frame = view.bounds
+            
+            var gradientColor = UIColor.twinkrunLightBlack()
+            
+            gradient!.colors = [
+                UIColor.clearColor(),
+                gradientColor.CGColor
             ]
-            view.layer.insertSublayer(gradient, atIndex: 0)
+            view.layer.insertSublayer(gradient!, atIndex: 0)
             view.layer.cornerRadius = 4
             view.clipsToBounds = true
             
             var graph = cell.viewWithTag(2) as BEMSimpleLineGraphView
+            graph.delegate = result
+            graph.dataSource = result
             graph.enablePopUpReport = true
             graph.colorBackgroundXaxis = UIColor.whiteColor()
             graph.colorTop = UIColor.clearColor()
-            graph.colorBottom = UIColor.whiteColor().colorWithAlphaComponent(0.2)
+            graph.colorBottom = UIColor.whiteColor().colorWithAlphaComponent(0.5)
             graph.colorLine = UIColor.whiteColor()
-            graph.delegate = self.result
-            graph.dataSource = self.result
+            graph.colorTouchInputLine = UIColor.whiteColor().colorWithAlphaComponent(0.5)
             
             var dateLabel = cell.viewWithTag(3) as UILabel
             dateLabel.text = result!.dateText()

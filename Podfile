@@ -4,5 +4,5 @@ platform :ios, '8.0'
 
 pod 'ObjectAL-for-iPhone'
 pod 'Canvas'
-pod 'BEMSimpleLineGraph'
+pod 'BEMSimpleLineGraph', :path => '~/code/BEMSimpleLineGraph'
 pod 'VTAcknowledgementsViewController'

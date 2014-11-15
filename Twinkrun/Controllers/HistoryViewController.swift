@@ -86,10 +86,10 @@ class HistoryViewController: UITableViewController, UITableViewDelegate, UITable
         cell.selectedBackgroundView = UIView()
         cell.selectedBackgroundView.backgroundColor = UIColor.clearColor()
         
+        var view = cell.viewWithTag(1)! as ResultView
+        view.result = self.resultData![indexPath.row]
         dispatch_async(dispatch_get_main_queue(), {
-            var view = cell.viewWithTag(1)! as ResultView
-            view.result = self.resultData![indexPath.row]
-            view.reload()
+            view.reload(animated: false)
         })
         
         return cell
@@ -168,6 +168,7 @@ class HistoryViewController: UITableViewController, UITableViewDelegate, UITable
             resultView.frame = CGRectMake(0, 0, 320, 244)
             resultView.result = result
             resultView.reload(animated: false)
+            resultView.back(nil)
             view.addSubview(resultView)
             let image = viewToImage(view)
             let contents = ["I got \(result.score) points in this game! #twinkrun", image]

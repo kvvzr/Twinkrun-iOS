@@ -75,6 +75,20 @@ class TWRResult: NSObject, NSCoding, BEMSimpleLineGraphDelegate, BEMSimpleLineGr
         aCoder.encodeObject(version, forKey: "version")
     }
     
+    func makeRanking() -> [TWRPlayer] {
+        var ranking = [TWRPlayer]()
+        var tmp = others
+        tmp.append(player)
+        ranking = tmp.filter({ $0.score != nil })
+        ranking.sort({ $0.score > $1.score })
+        // ranking += tmp.filter({ $0.score == nil })
+        return ranking
+    }
+    
+    func rank(player: TWRPlayer) -> Int? {
+        return find(makeRanking(), player)
+    }
+    
     func numberOfPointsInLineGraph(graph: BEMSimpleLineGraphView!) -> Int {
         return scores.count
     }
