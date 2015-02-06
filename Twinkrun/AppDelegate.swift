@@ -1,3 +1,4 @@
+
 //
 //  AppDelegate.swift
 //  Twinkrun
@@ -16,6 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        if let playerName = NSUserDefaults.standardUserDefaults().objectForKey("playerName") as? String {
+            TWROption.sharedInstance.playerName = playerName
+        }
+        
         return true
     }
 

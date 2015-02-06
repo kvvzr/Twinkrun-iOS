@@ -1,15 +1,15 @@
 //
-//  TwinkrunTests.swift
-//  TwinkrunTests
+//  TWRResultTest.swift
+//  Twinkrun
 //
-//  Created by Kawazure on 2014/10/09.
-//  Copyright (c) 2014年 Twinkrun. All rights reserved.
+//  Created by Kenta Hara on 10/17/14.
+//  Copyright (c) 2014 Twinkrun. All rights reserved.
 //
 
 import UIKit
 import XCTest
 
-class TwinkrunTests: XCTestCase {
+class TWRResultTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -20,19 +20,17 @@ class TwinkrunTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
-    func testOption() {
-        var option = TWROption.sharedInstance
-        option.playerName = "WAIWAI"
-        
-        XCTAssert(TWROption.sharedInstance.playerName == "WAIWAI")
+
+    func testExample() {
+        // This is an example of a functional test case.
+        XCTAssert(true, "Pass")
     }
-    
+
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measureBlock() {
             // Put the code you want to measure the time of here.
         }
     }
-    
+
 }
