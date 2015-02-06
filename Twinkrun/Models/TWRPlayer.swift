@@ -87,6 +87,7 @@ class TWRPlayer: NSObject, NSCoding, Equatable {
     }
     
     func advertisementData(UUID: CBUUID) -> Dictionary<NSObject, AnyObject> {
+        println(splitString(name, bytes: 12) + "," + String(colorSeed))
         return [
             CBAdvertisementDataServiceUUIDsKey: [UUID],
             CBAdvertisementDataLocalNameKey: splitString(name, bytes: 12) + "," + String(colorSeed)

@@ -140,8 +140,8 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
             
             cell.backgroundColor = UIColor.twinkrunBlack()
             cell.tintColor = UIColor.whiteColor()
-            cell.textLabel.textColor = UIColor.whiteColor()
-            cell.textLabel.text = title
+            cell.textLabel!.textColor = UIColor.whiteColor()
+            cell.textLabel!.text = title
             
             return cell
         }

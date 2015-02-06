@@ -115,8 +115,8 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
         var other = others![indexPath.row]
         
         cell.backgroundColor = UIColor.twinkrunBlack()
-        cell.textLabel.textColor = UIColor.whiteColor()
-        cell.textLabel.text = other.name
+        cell.textLabel!.textColor = UIColor.whiteColor()
+        cell.textLabel!.text = other.name
         cell.accessoryType = other.playWith ? .Checkmark : .None
         return cell
     }
@@ -136,6 +136,7 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
             let other = others!.filter { $0 == findPlayer }
             if other.isEmpty {
                 others!.append(findPlayer)
+                println(localName)
             } else {
                 other.first!.name = findPlayer.name
                 other.first!.colorSeed = findPlayer.colorSeed
