@@ -16,8 +16,8 @@ Also, the old version is available on App Store(itunes.apple.com/jp/app/twinkrun
 [Twinkrun/rulebook](https://github.com/twinkrun/rulebook)
 
 ## Contributers
-- (@kvvzr)[https://github.com/kvvzr]
-- (@mactkg)[https://github.com/mactkg]
+- [@kvvzr](https://github.com/kvvzr)
+- [@mactkg](https://github.com/mactkg)
 
 ## License
 The software is released under the MIT License, see LICENSE
