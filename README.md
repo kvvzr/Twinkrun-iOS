@@ -1,5 +1,6 @@
 # Twinkrun
 An Outside Game Based on Received Signal Strength Indication of Bluetooth
+
 [Promotional Video](http://vimeo.com/87914113)
 
 ## Installation
@@ -15,8 +16,8 @@ Also, the old version is available on App Store(itunes.apple.com/jp/app/twinkrun
 [Twinkrun/rulebook](https://github.com/twinkrun/rulebook)
 
 ## Contributers
-- @kvvzr
-- @mactkg
+- (@kvvzr)[https://github.com/kvvzr]
+- (@mactkg)[https://github.com/mactkg]
 
 ## License
 The software is released under the MIT License, see LICENSE
