@@ -9,17 +9,17 @@
 import UIKit
 import CoreBluetooth
 
-class ResultViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
+class ResultViewController: UITableViewController, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
     var result: TWRResult?
     var centralManager: CBCentralManager?
     var peripheralManager: CBPeripheralManager?
     
-    override init() {
+    override init(style: UITableViewStyle) {
         super.init(style: UITableViewStyle.Plain)
     }
 
     required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        super.init(coder: aDecoder)!
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -63,14 +63,14 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
             peripheralManager!.stopAdvertising()
         }
         
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        let path = documentsPath.stringByAppendingPathComponent("TWRResultData2")
+        let documentsPath = NSURL(string: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0])!
+        let path = documentsPath.URLByAppendingPathComponent("TWRResultData2").path!
         var data = NSKeyedUnarchiver.unarchiveObjectWithFile(path) as? [TWRResult]
         if (data == nil) {
             data = []
         }
         data!.append(result!)
-        data!.sort({$0.date.timeIntervalSinceNow > $1.date.timeIntervalSinceNow})
+        data!.sortInPlace {$0.date.timeIntervalSinceNow > $1.date.timeIntervalSinceNow}
         
         NSKeyedArchiver.archiveRootObject(data!, toFile: path)
     }
@@ -93,29 +93,29 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            var cell = tableView.dequeueReusableCellWithIdentifier("resultCell") as UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("resultCell")! as UITableViewCell
             
             cell.backgroundColor = UIColor.twinkrunBlack()
             cell.layoutMargins = UIEdgeInsetsZero
             cell.separatorInset = UIEdgeInsetsZero
             
-            var view = cell.viewWithTag(1)!
+            let view = cell.viewWithTag(1)!
             
-            var roleCount = result!.roles.count
-            var gradient = CAGradientLayer()
-            gradient!.frame = view.bounds
+            _ = result!.roles.count
+            let gradient = CAGradientLayer()
+            gradient.frame = view.bounds
             
-            var gradientColor = UIColor.twinkrunLightBlack()
+            let gradientColor = UIColor.twinkrunLightBlack()
             
-            gradient!.colors = [
+            gradient.colors = [
                 UIColor.clearColor(),
                 gradientColor.CGColor
             ]
-            view.layer.insertSublayer(gradient!, atIndex: 0)
+            view.layer.insertSublayer(gradient, atIndex: 0)
             view.layer.cornerRadius = 4
             view.clipsToBounds = true
             
-            var graph = cell.viewWithTag(2) as BEMSimpleLineGraphView
+            let graph = cell.viewWithTag(2) as! BEMSimpleLineGraphView
             graph.delegate = result
             graph.dataSource = result
             graph.enablePopUpReport = true
@@ -125,16 +125,16 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
             graph.colorLine = UIColor.whiteColor()
             graph.colorTouchInputLine = UIColor.whiteColor().colorWithAlphaComponent(0.5)
             
-            var dateLabel = cell.viewWithTag(3) as UILabel
+            let dateLabel = cell.viewWithTag(3) as! UILabel
             dateLabel.text = result!.dateText()
             
-            var scoreLabel = cell.viewWithTag(4) as UILabel
+            let scoreLabel = cell.viewWithTag(4) as! UILabel
             scoreLabel.text = "\(NSNumberFormatter.localizedStringFromNumber(result!.score, numberStyle: .DecimalStyle)) Point"
             
             return cell
         } else {
-            var cell = tableView.dequeueReusableCellWithIdentifier("rankingCell") as UITableViewCell
-            var rankingTable = cell.viewWithTag(1) as RankingView
+            let cell = tableView.dequeueReusableCellWithIdentifier("rankingCell")! as UITableViewCell
+            let rankingTable = cell.viewWithTag(1) as! RankingView
             rankingTable.result = result
             rankingTable.makeRanking()
             
@@ -157,17 +157,17 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
     func viewToImage(view: UIView) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, UIScreen.mainScreen().scale)
         let context = UIGraphicsGetCurrentContext()
-        view.layer.renderInContext(context)
+        view.layer.renderInContext(context!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
         return image
     }
     
-    func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
+    func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
         if let localName = advertisementData["kCBAdvDataLocalName"] as AnyObject? as? String {
             if let player = result!.others.filter({ $0.identifier == peripheral.identifier }).first {
-                player.score = localName.toInt()
+                player.score = Int(localName)
                 if player.score != nil {
                     tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.None)
                 }
@@ -175,7 +175,7 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
         }
     }
     
-    func centralManagerDidUpdateState(central: CBCentralManager!) {
+    func centralManagerDidUpdateState(central: CBCentralManager) {
         if central.state == CBCentralManagerState.PoweredOn {
             central.scanForPeripheralsWithServices(
                 [CBUUID(string: TWROption.sharedInstance.rankingUUID)],
@@ -184,7 +184,7 @@ class ResultViewController: UITableViewController, UITableViewDelegate, UITableV
         }
     }
     
-    func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager!) {
+    func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager) {
         if peripheral.state == CBPeripheralManagerState.PoweredOn {
             peripheral.startAdvertising([
                 CBAdvertisementDataServiceUUIDsKey: [CBUUID(string: TWROption.sharedInstance.rankingUUID)],

@@ -23,7 +23,7 @@ class TWRPlayerTest: XCTestCase {
     }
     
     func testRole() {
-        var player = TWRPlayer(playerName: "kwzr", identifier: nil, colorSeed: 0)
+        let player = TWRPlayer(playerName: "kwzr", identifier: nil, colorSeed: 0)
         player.roles = [
             TWRRole.red(count: 4, time: 3, score: -10),
             TWRRole.green(count: 3, time: 3, score: 20),
@@ -36,17 +36,16 @@ class TWRPlayerTest: XCTestCase {
             TWRRole.black(count: 3, time: 3, score: 0),
             TWRRole.red(count: 4, time: 3, score: -10)
         ]
-        
-        XCTAssert(TWRRole.red(count: 4, time: 3, score: -10) == player.previousRole(0))
+        XCTAssert(TWRRole.red(count: 4, time: 3, score: -10) == player.previousRole(0)!)
         XCTAssert(TWRRole.red(count: 4, time: 3, score: -10) == player.currentRole(0))
         XCTAssert(TWRRole.green(count: 3, time: 3, score: 20) == player.nextRole(0)!)
-        XCTAssert(TWRRole.red(count: 4, time: 3, score: -10) == player.previousRole(3))
+        XCTAssert(TWRRole.red(count: 4, time: 3, score: -10) == player.previousRole(3)!)
         XCTAssert(TWRRole.green(count: 3, time: 3, score: 20) == player.currentRole(3))
         XCTAssert(TWRRole.black(count: 3, time: 3, score: 0) == player.currentRole(6))
-        XCTAssert(TWRRole.black(count: 3, time: 3, score: 0) == player.previousRole(27))
+        XCTAssert(TWRRole.black(count: 3, time: 3, score: 0) == player.previousRole(27)!)
         XCTAssert(TWRRole.red(count: 4, time: 3, score: -10) == player.currentRole(27))
         XCTAssert(player.nextRole(27) == nil)
-        XCTAssert(TWRRole.red(count: 4, time: 3, score: -10) == player.previousRole(30))
+        XCTAssert(TWRRole.red(count: 4, time: 3, score: -10) == player.previousRole(30)!)
         XCTAssert(TWRRole.red(count: 4, time: 3, score: -10) == player.currentRole(30))
     }
 

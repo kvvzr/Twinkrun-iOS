@@ -31,7 +31,7 @@ extension UIColor {
     }
 }
 
-class TWRRole: NSObject, NSCoding, Hashable {
+class TWRRole: NSObject, NSCoding {
     let name: NSString
     let count: UInt, time: UInt, score: Float
     let color: UIColor
@@ -46,8 +46,8 @@ class TWRRole: NSObject, NSCoding, Hashable {
     }
     
     required init(coder aDecoder: NSCoder) {
-        self.name = aDecoder.decodeObjectForKey("name") as NSString
-        self.color = aDecoder.decodeObjectForKey("color") as UIColor
+        self.name = aDecoder.decodeObjectForKey("name") as! NSString
+        self.color = aDecoder.decodeObjectForKey("color") as! UIColor
         self.count = UInt(aDecoder.decodeIntegerForKey("count"))
         self.time = UInt(aDecoder.decodeIntegerForKey("time"))
         self.score = aDecoder.decodeFloatForKey("score")
@@ -61,15 +61,15 @@ class TWRRole: NSObject, NSCoding, Hashable {
         aCoder.encodeFloat(score, forKey: "score")
     }
     
-    class func red(#count: UInt, time: UInt, score: Float) -> TWRRole {
+    class func red(count count: UInt, time: UInt, score: Float) -> TWRRole {
         return TWRRole(name: "Red", color: UIColor.twinkrunRed(), count: count, time: time, score: score)
     }
     
-    class func green(#count: UInt, time: UInt, score: Float) -> TWRRole {
+    class func green(count count: UInt, time: UInt, score: Float) -> TWRRole {
         return TWRRole(name: "Green", color: UIColor.twinkrunGreen(), count: count, time: time, score: score)
     }
     
-    class func black(#count: UInt, time: UInt, score: Float) -> TWRRole {
+    class func black(count count: UInt, time: UInt, score: Float) -> TWRRole {
         return TWRRole(name: "Black", color: UIColor.twinkrunBlack(), count: count, time: time, score: score)
     }
     

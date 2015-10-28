@@ -16,7 +16,7 @@ enum SettingType {
     case PushView(title: String, onSelect: UINavigationController -> Void)
 }
 
-class SettingViewController: UITableViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
+class SettingViewController: UITableViewController, UITextFieldDelegate {
     var option: TWROption?
     var settings: [String: [SettingType]]?
     
@@ -29,14 +29,14 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
             "Help": [
                 /*SettingType.PushView(title: "Introduction", { navigationController in
                 }),*/
-                SettingType.PushView(title: "License", { navigationController in
+                SettingType.PushView(title: "License", onSelect: { navigationController in
                     let path = NSBundle.mainBundle().pathForResource("Pods-acknowledgements", ofType: "plist")
-                    navigationController.pushViewController(VTAcknowledgementsViewController(acknowledgementsPlistPath: path), animated: true)
+                    navigationController.pushViewController(VTAcknowledgementsViewController(acknowledgementsPlistPath: path)!, animated: true)
                 })
             ]
         ]
         
-        if let indexPath = tableView.indexPathForSelectedRow() {
+        if let indexPath = tableView.indexPathForSelectedRow {
             tableView.deselectRowAtIndexPath(indexPath, animated: animated)
         }
     }
@@ -78,7 +78,7 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let settings = settings {
-            let key = settings.keys.array[section]
+            let key = Array(settings.keys)[section]
             return settings[key]!.count
         }
         return 0
@@ -90,37 +90,37 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if let settings = settings {
-            return settings.keys.array[section]
+            return Array(settings.keys)[section]
         }
         return ""
     }
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        var view = UIView()
+        let view = UIView()
         view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
         cell.selectedBackgroundView = view
     }
     
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if view is UITableViewHeaderFooterView {
-            var header = view as UITableViewHeaderFooterView
+            let header = view as! UITableViewHeaderFooterView
             header.contentView.backgroundColor = UIColor.twinkrunLightBlack()
-            header.textLabel.textColor = UIColor.whiteColor()
+            header.textLabel!.textColor = UIColor.whiteColor()
         }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let key = settings!.keys.array[indexPath.section]
+        let key = Array(settings!.keys)[indexPath.section]
         let setting = settings![key]![indexPath.row]
         
         switch setting {
         case .Input(defaultValue: let value, onChange: let onChange):
-            var cell = tableView.dequeueReusableCellWithIdentifier("inputCell") as UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("inputCell")! as UITableViewCell
             
             cell.backgroundColor = UIColor.twinkrunBlack()
             cell.selectionStyle = .None
             
-            var field = cell.viewWithTag(1) as UITextField
+            let field = cell.viewWithTag(1) as! UITextField
             field.attributedPlaceholder = NSAttributedString(
                 string: "Player Name",
                 attributes: [NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(0.5)]
@@ -132,11 +132,11 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
             field.addTarget(self, action: Selector(onChange), forControlEvents: UIControlEvents.EditingChanged)
             
             return cell
-        case .Select(title: let title, defaultValue: let value, values: let values, onChange: let onChange):
-            var cell = UITableViewCell()
+        case .Select(title: _, defaultValue: _, values: _, onChange: _):
+            let cell = UITableViewCell()
             return cell
-        case .PushView(title: let title, onSelect: let onSelect):
-            var cell = UITableViewCell()
+        case .PushView(title: let title, onSelect: _):
+            let cell = UITableViewCell()
             
             cell.backgroundColor = UIColor.twinkrunBlack()
             cell.tintColor = UIColor.whiteColor()
@@ -148,15 +148,15 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let key = settings!.keys.array[indexPath.section]
+        let key = Array(settings!.keys)[indexPath.section]
         let setting = settings![key]![indexPath.row]
         
         switch setting {
-        case .Input(defaultValue: let value, onChange: let onChange):
+        case .Input(defaultValue: _, onChange: _):
             break
-        case .Select(title: let title, defaultValue: let value, values: let values, onChange: let onChange):
+        case .Select(title: _, defaultValue: _, values: _, onChange: _):
             break
-        case .PushView(title: let title, onSelect: let onSelect):
+        case .PushView(title: _, onSelect: let onSelect):
             onSelect(navigationController!)
             break
         }
@@ -168,7 +168,7 @@ class SettingViewController: UITableViewController, UITextFieldDelegate, UITable
     }
     
     func onChangePlayerName(textField: UITextField) {
-        option!.playerName = textField.text
+        option!.playerName = textField.text!
         NSUserDefaults.standardUserDefaults().setObject(option!.playerName, forKey: "playerName")
         NSUserDefaults.standardUserDefaults().synchronize()
     }

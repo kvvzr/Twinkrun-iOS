@@ -9,7 +9,7 @@
 import UIKit
 import CoreBluetooth
 
-class HistoryViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource {
+class HistoryViewController: UITableViewController {
     var resultData: [TWRResult]?
     var toolbar: UIToolbar?
     var selectedRows: [Int] = []
@@ -17,8 +17,8 @@ class HistoryViewController: UITableViewController, UITableViewDelegate, UITable
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        let path = documentsPath.stringByAppendingPathComponent("TWRResultData2")
+        let documentsPath = NSURL(string: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String)!
+        let path = documentsPath.URLByAppendingPathComponent("TWRResultData2").path!
         resultData = NSKeyedUnarchiver.unarchiveObjectWithFile(path) as? [TWRResult]
         
         dispatch_async(dispatch_get_main_queue(), {
@@ -81,12 +81,12 @@ class HistoryViewController: UITableViewController, UITableViewDelegate, UITable
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("resultCell") as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("resultCell")! as UITableViewCell
         cell.backgroundColor = UIColor.clearColor()
         cell.selectedBackgroundView = UIView()
-        cell.selectedBackgroundView.backgroundColor = UIColor.clearColor()
+        cell.selectedBackgroundView!.backgroundColor = UIColor.clearColor()
         
-        var view = cell.viewWithTag(1)! as ResultView
+        let view = cell.viewWithTag(1)! as! ResultView
         view.result = self.resultData![indexPath.row]
         dispatch_async(dispatch_get_main_queue(), {
             view.reload(animated: false)
@@ -145,15 +145,15 @@ class HistoryViewController: UITableViewController, UITableViewDelegate, UITable
     func onDelete(sender: UIBarButtonItem) {
         var indexPaths: [NSIndexPath] = []
         
-        sort(&selectedRows, {$0 > $1})
+        selectedRows.sortInPlace {$0 > $1}
         for row in selectedRows {
             indexPaths.append(NSIndexPath(forRow: row, inSection: 0))
             resultData!.removeAtIndex(row)
         }
         tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.None)
         
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-        let path = documentsPath.stringByAppendingPathComponent("TWRResultData2")
+        let documentsPath = NSURL(string: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0])!
+        let path = documentsPath.URLByAppendingPathComponent("TWRResultData2").path!
         NSKeyedArchiver.archiveRootObject(resultData!, toFile: path)
         
         self.setEditing(false, animated: true)
@@ -164,7 +164,7 @@ class HistoryViewController: UITableViewController, UITableViewDelegate, UITable
             let result = resultData![row]
             let view = UIView(frame: CGRectMake(0, 0, 320, 224))
             view.backgroundColor = UIColor.twinkrunBlack()
-            var resultView = UINib(nibName: "ShareBoard", bundle: nil).instantiateWithOwner(self, options: nil)[0] as ResultView
+            let resultView = UINib(nibName: "ShareBoard", bundle: nil).instantiateWithOwner(self, options: nil)[0] as! ResultView
             resultView.frame = CGRectMake(0, 0, 320, 244)
             resultView.result = result
             resultView.reload(animated: false)
@@ -183,7 +183,7 @@ class HistoryViewController: UITableViewController, UITableViewDelegate, UITable
     func viewToImage(view: UIView) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, UIScreen.mainScreen().scale)
         let context = UIGraphicsGetCurrentContext()
-        view.layer.renderInContext(context)
+        view.layer.renderInContext(context!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         

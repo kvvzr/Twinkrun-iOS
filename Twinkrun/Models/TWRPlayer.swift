@@ -1,3 +1,4 @@
+
 //
 //  TWRPlayer.swift
 //  Twinkrun
@@ -9,7 +10,7 @@
 import Foundation
 import CoreBluetooth
 
-class TWRPlayer: NSObject, NSCoding, Equatable {
+class TWRPlayer: NSObject, NSCoding {
     let identifier: NSUUID?
     var playWith: Bool, countedScore: Bool
     var name: NSString
@@ -37,7 +38,7 @@ class TWRPlayer: NSObject, NSCoding, Equatable {
         var data: [String] = advertisementDataLocalName.componentsSeparatedByString(",")
         
         self.name = data[0]
-        self.colorSeed = UInt32(data[1].toInt()!)
+        self.colorSeed = UInt32(Int(data[1])!)
         self.identifier = identifier
         self.option = TWROption.sharedInstance.gameOption
         
@@ -51,15 +52,16 @@ class TWRPlayer: NSObject, NSCoding, Equatable {
         playWith = true
         countedScore = false
         
-        if let version = aDecoder.decodeObjectForKey("version") as? String {
-            self.name = aDecoder.decodeObjectForKey("name") as NSString
+        if let _ = aDecoder.decodeObjectForKey("version") as? String {
+            self.name = aDecoder.decodeObjectForKey("name") as! NSString
             self.identifier = aDecoder.decodeObjectForKey("identifier") as? NSUUID
             self.colorSeed = UInt32(aDecoder.decodeIntegerForKey("colorSeed"))
             self.score = aDecoder.decodeIntegerForKey("score")
             super.init()
         } else {
-            self.name = aDecoder.decodeObjectForKey("playerName") as NSString
-            self.colorSeed = UInt32((aDecoder.decodeObjectForKey("colorListSeed") as NSNumber).integerValue)
+            self.name = aDecoder.decodeObjectForKey("playerName") as! NSString
+            self.identifier = nil
+            self.colorSeed = UInt32((aDecoder.decodeObjectForKey("colorListSeed") as! NSNumber).integerValue)
             super.init()
         }
     }
@@ -78,7 +80,7 @@ class TWRPlayer: NSObject, NSCoding, Equatable {
         roles = []
         
         for role in option!.roles {
-            for i in 0 ..< role.count {
+            for _ in 0 ..< role.count {
                 roles!.append(role)
             }
         }
@@ -86,15 +88,15 @@ class TWRPlayer: NSObject, NSCoding, Equatable {
         roles!.shuffle(colorSeed)
     }
     
-    func advertisementData(UUID: CBUUID) -> Dictionary<NSObject, AnyObject> {
+    func advertisementData(UUID: CBUUID) -> [String: AnyObject] {
         return [
             CBAdvertisementDataServiceUUIDsKey: [UUID],
-            CBAdvertisementDataLocalNameKey: splitString(name, bytes: 12) + "," + String(colorSeed)
+            CBAdvertisementDataLocalNameKey: (splitString(name, bytes: 12) as String) + "," + String(colorSeed)
         ]
     }
     
     func previousRole(second: UInt) -> TWRRole? {
-        var sec = second % option!.gameTime()
+        let sec = second % option!.gameTime()
         var progress: UInt = 0
         
         for i in 0 ..< roles!.count {
@@ -109,7 +111,7 @@ class TWRPlayer: NSObject, NSCoding, Equatable {
     }
     
     func currentRole(second: UInt) -> TWRRole {
-        var sec = second % option!.gameTime()
+        let sec = second % option!.gameTime()
         var progress: UInt = 0
         var current: TWRRole?
         
@@ -140,9 +142,9 @@ class TWRPlayer: NSObject, NSCoding, Equatable {
     }
     
     private func splitString(input: NSString, bytes length: Int) -> NSString {
-        var data = input.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        for i in reverse(0...min(length, data!.length)) {
+        let data = input.dataUsingEncoding(NSUTF8StringEncoding)
+
+        for i in (0...min(length, data!.length)).reverse() {
             if let result:NSString = NSString(data: data!.subdataWithRange(NSRange(location: 0, length: i)), encoding: NSUTF8StringEncoding) {
                 if result.length > 0 {
                     return result

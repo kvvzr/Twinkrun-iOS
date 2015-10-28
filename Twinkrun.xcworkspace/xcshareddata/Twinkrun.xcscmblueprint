@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "0F7C40B50EFF3BE8A8888C58C8B03757FB0F7C9E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "1CA8AD815677B6FB0DD135F65EC4576AE68426CF" : 0,
+    "0F7C40B50EFF3BE8A8888C58C8B03757FB0F7C9E" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B94899FA-05F2-41CD-9EFB-805B39F41A3D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "1CA8AD815677B6FB0DD135F65EC4576AE68426CF" : "BEMSimpleLineGraph",
+    "0F7C40B50EFF3BE8A8888C58C8B03757FB0F7C9E" : "Twinkrun"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Twinkrun",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Twinkrun.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git.twinkrun.net:kwzr\/twinkrun-for-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0F7C40B50EFF3BE8A8888C58C8B03757FB0F7C9E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/kvvzr\/BEMSimpleLineGraph",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1CA8AD815677B6FB0DD135F65EC4576AE68426CF"
+    }
+  ]
+}

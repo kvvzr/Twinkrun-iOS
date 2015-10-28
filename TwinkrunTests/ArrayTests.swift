@@ -26,7 +26,7 @@ class ArrayTests: XCTestCase {
         queue.append(2)
         XCTAssertEqual(queue, [1, 2])
         
-        var one = queue.dequeue()!
+        let one = queue.dequeue()!
         XCTAssertEqual(one, 1)
         
         queue.dequeue()

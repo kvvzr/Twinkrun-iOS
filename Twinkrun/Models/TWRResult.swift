@@ -25,40 +25,44 @@ class TWRResult: NSObject, NSCoding, BEMSimpleLineGraphDelegate, BEMSimpleLineGr
         self.player = player
         self.others = others
         self.score = score
-        
-        self.scores = []
-        self.roles = []
+
+        var tmpScores = [Int]()
+        var tmpRoles = [TWRRole]()
         for roleAndScores in scores {
-            self.scores += roleAndScores.scores
-            self.roles.append(roleAndScores.role)
+            tmpScores += roleAndScores.scores
+            tmpRoles.append(roleAndScores.role)
         }
-        maxScore = maxElement(self.scores)
-        minScore = minElement(self.scores)
+        self.scores = tmpScores
+        self.roles = tmpRoles
+        maxScore = self.scores.maxElement()!
+        minScore = self.scores.minElement()!
     }
     
     required init(coder aDecoder: NSCoder) {
-        if let version = aDecoder.decodeObjectForKey("version") as? String {
-            self.date = aDecoder.decodeObjectForKey("date") as NSDate
-            self.player = aDecoder.decodeObjectForKey("player") as TWRPlayer
-            self.others = aDecoder.decodeObjectForKey("others") as [TWRPlayer]
-            self.scores = aDecoder.decodeObjectForKey("scores") as [Int]
+        if let _ = aDecoder.decodeObjectForKey("version") as? String {
+            self.date = aDecoder.decodeObjectForKey("date") as! NSDate
+            self.player = aDecoder.decodeObjectForKey("player") as! TWRPlayer
+            self.others = aDecoder.decodeObjectForKey("others") as! [TWRPlayer]
+            self.scores = aDecoder.decodeObjectForKey("scores") as! [Int]
             self.score = aDecoder.decodeIntegerForKey("score")
-            self.roles = aDecoder.decodeObjectForKey("roles") as [TWRRole]
+            self.roles = aDecoder.decodeObjectForKey("roles") as! [TWRRole]
         } else {
             self.date = NSDate()
-            self.player = aDecoder.decodeObjectForKey("myDevice") as TWRPlayer
-            self.others = aDecoder.decodeObjectForKey("players") as [TWRPlayer]
-            self.scores = []
-            self.roles = []
-            let transitions = aDecoder.decodeObjectForKey("scores") as [[String: AnyObject]]
+            self.player = aDecoder.decodeObjectForKey("myDevice") as! TWRPlayer
+            self.others = aDecoder.decodeObjectForKey("players") as! [TWRPlayer]
+            var tmpScores = [Int]()
+            var tmpRoles = [TWRRole]()
+            let transitions = aDecoder.decodeObjectForKey("scores") as! [[String: AnyObject]]
             for trans in transitions {
-                self.scores += trans["scoreTransition"]! as [Int]
-                self.roles.append(TWRRole(name: "", color: trans["color"]! as UIColor, count: 1, time: 3, score: 0))
+                tmpScores += trans["scoreTransition"]! as! [Int]
+                tmpRoles.append(TWRRole(name: "", color: trans["color"]! as! UIColor, count: 1, time: 3, score: 0))
             }
+            self.scores = tmpScores
+            self.roles = tmpRoles
             self.score = aDecoder.decodeIntegerForKey("score")
         }
-        maxScore = maxElement(self.scores)
-        minScore = minElement(self.scores)
+        maxScore = self.scores.maxElement()!
+        minScore = self.scores.minElement()!
     }
     
     func dateText() -> String {
@@ -80,28 +84,28 @@ class TWRResult: NSObject, NSCoding, BEMSimpleLineGraphDelegate, BEMSimpleLineGr
         var tmp = others
         tmp.append(player)
         ranking = tmp.filter({ $0.score != nil })
-        ranking.sort({ $0.score > $1.score })
+        ranking.sortInPlace({ $0.score > $1.score })
         // ranking += tmp.filter({ $0.score == nil })
         return ranking
     }
     
     func rank(player: TWRPlayer) -> Int? {
-        return find(makeRanking(), player)
+        return makeRanking().indexOf(player)
     }
     
-    func numberOfPointsInLineGraph(graph: BEMSimpleLineGraphView!) -> Int {
+    func numberOfPointsInLineGraph(graph: BEMSimpleLineGraphView) -> Int {
         return scores.count
     }
 
-    func lineGraph(graph: BEMSimpleLineGraphView!, valueForPointAtIndex index: Int) -> CGFloat {
+    func lineGraph(graph: BEMSimpleLineGraphView, valueForPointAtIndex index: Int) -> CGFloat {
         return CGFloat(scores[index])
     }
     
-    func maxValueForLineGraph(graph: BEMSimpleLineGraphView!) -> CGFloat {
+    func maxValueForLineGraph(graph: BEMSimpleLineGraphView) -> CGFloat {
         return CGFloat(maxScore)
     }
     
-    func minValueForLineGraph(graph: BEMSimpleLineGraphView!) -> CGFloat {
+    func minValueForLineGraph(graph: BEMSimpleLineGraphView) -> CGFloat {
         return CGFloat(minScore)
     }
 }

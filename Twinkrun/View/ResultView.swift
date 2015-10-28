@@ -12,7 +12,7 @@ class ResultView: UIView {
     var result: TWRResult?
     
     required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        super.init(coder: aDecoder)!
     }
     
     override init(frame: CGRect) {
@@ -23,15 +23,15 @@ class ResultView: UIView {
         reload(animated: true)
     }
     
-    func reload(#animated: Bool) {
-        for sublayer in layer.sublayers {
+    func reload(animated animated: Bool) {
+        for sublayer in layer.sublayers! {
             if sublayer is CAGradientLayer {
                 sublayer.removeFromSuperlayer()
             }
         }
         
-        var gradient = CAGradientLayer()
-        gradient!.frame = self.bounds
+        let gradient = CAGradientLayer()
+        gradient.frame = self.bounds
         
         var gradientColor = UIColor.twinkrunLightBlack()
         if let result = result {
@@ -43,16 +43,16 @@ class ResultView: UIView {
             }
         }
         
-        gradient!.colors = [
+        gradient.colors = [
             UIColor.clearColor(),
             gradientColor.CGColor
         ]
-        layer.insertSublayer(gradient!, atIndex: 0)
+        layer.insertSublayer(gradient, atIndex: 0)
         layer.cornerRadius = 4
         clipsToBounds = true
         
         if let result = result {
-            var graph = viewWithTag(2) as BEMSimpleLineGraphView
+            let graph = viewWithTag(2) as! BEMSimpleLineGraphView
             graph.delegate = result
             graph.dataSource = result
             graph.enablePopUpReport = true
@@ -67,25 +67,25 @@ class ResultView: UIView {
             graph.reloadGraph()
             
             if let view = viewWithTag(7) {
-                var rankingTable = view as RankingView
+                let rankingTable = view as! RankingView
                 rankingTable.result = result
                 rankingTable.makeRanking()
                 rankingTable.backgroundColor = UIColor.clearColor()
             }
             
-            var dateLabel = viewWithTag(3) as UILabel
+            let dateLabel = viewWithTag(3) as! UILabel
             dateLabel.text = result.dateText()
             
-            var scoreLabel = viewWithTag(4) as UILabel
+            let scoreLabel = viewWithTag(4) as! UILabel
             scoreLabel.text = "\(NSNumberFormatter.localizedStringFromNumber(result.score, numberStyle: .DecimalStyle)) Point"
             
             if let view = viewWithTag(5) {
-                var backButton = view as UIButton
+                let backButton = view as! UIButton
                 backButton.addTarget(self, action: Selector("back:"), forControlEvents: UIControlEvents.TouchUpInside)
             }
             
             if let view = viewWithTag(6) {
-                var nextButton = view as UIButton
+                let nextButton = view as! UIButton
                 nextButton.addTarget(self, action: Selector("next:"), forControlEvents: UIControlEvents.TouchUpInside)
             }
             
@@ -99,20 +99,20 @@ class ResultView: UIView {
     
     func back(sender: UIButton?) {
         if let view = viewWithTag(5) {
-            var backButton = view as UIButton
+            let backButton = view as! UIButton
             backButton.enabled = false
         }
         
         if let view = viewWithTag(6) {
-            var nextButton = view as UIButton
+            let nextButton = view as! UIButton
             nextButton.enabled = true
         }
         
-        var graph = viewWithTag(2) as BEMSimpleLineGraphView
+        let graph = viewWithTag(2) as! BEMSimpleLineGraphView
         graph.hidden = false
         
         if let view = viewWithTag(7) {
-            var rankingTable = view as RankingView
+            let rankingTable = view as! RankingView
             rankingTable.hidden = true
         }
         
@@ -123,20 +123,20 @@ class ResultView: UIView {
     
     func next(sender: UIButton?) {
         if let view = viewWithTag(5) {
-            var backButton = view as UIButton
+            let backButton = view as! UIButton
             backButton.enabled = true
         }
         
         if let view = viewWithTag(6) {
-            var nextButton = view as UIButton
+            let nextButton = view as! UIButton
             nextButton.enabled = false
         }
         
-        var graph = viewWithTag(2) as BEMSimpleLineGraphView
+        let graph = viewWithTag(2) as! BEMSimpleLineGraphView
         graph.hidden = true
         
         if let view = viewWithTag(7) {
-            var rankingTable = view as RankingView
+            let rankingTable = view as! RankingView
             rankingTable.hidden = false
         }
         

@@ -1,3 +1,4 @@
+
 //
 //  PlayerSelectViewController.swift
 //  Twinkrun
@@ -9,7 +10,7 @@
 import UIKit
 import CoreBluetooth
 
-class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
+class PlayerSelectViewController: UITableViewController, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
     @IBOutlet weak var readyButton: UIBarButtonItem!
     var player: TWRPlayer?
     var others: [TWRPlayer]?
@@ -111,32 +112,31 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
             }
         }
         
-        var cell = tableView.dequeueReusableCellWithIdentifier("playerCell") as UITableViewCell
-        var other = others![indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier("playerCell")! as UITableViewCell
+        let other = others![indexPath.row]
         
         cell.backgroundColor = UIColor.twinkrunBlack()
         cell.textLabel!.textColor = UIColor.whiteColor()
-        cell.textLabel!.text = other.name
+        cell.textLabel!.text = other.name as String
         cell.accessoryType = other.playWith ? .Checkmark : .None
         return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        var other = others![indexPath.row]
+        let other = others![indexPath.row]
         other.playWith = !other.playWith
         
         tableView.reloadData()
     }
     
-    func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
+    func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
         if let localName = advertisementData["kCBAdvDataLocalName"] as AnyObject? as? String {
             let findPlayer = TWRPlayer(advertisementDataLocalName: localName, identifier: peripheral.identifier)
         
             let other = others!.filter { $0 == findPlayer }
             if other.isEmpty {
                 others!.append(findPlayer)
-                println(localName)
             } else {
                 other.first!.name = findPlayer.name
                 other.first!.colorSeed = findPlayer.colorSeed
@@ -149,7 +149,7 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
         }
     }
     
-    func centralManagerDidUpdateState(central: CBCentralManager!) {
+    func centralManagerDidUpdateState(central: CBCentralManager) {
         if central.state == CBCentralManagerState.PoweredOn {
             central.scanForPeripheralsWithServices(
                 [CBUUID(string: option!.advertiseUUID)],
@@ -158,7 +158,7 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
         }
     }
     
-    func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager!) {
+    func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager) {
         if peripheral.state == CBPeripheralManagerState.PoweredOn {
             peripheral.startAdvertising(
                 player!.advertisementData(CBUUID(string: option!.advertiseUUID))
@@ -168,7 +168,7 @@ class PlayerSelectViewController: UITableViewController, UITableViewDelegate, UI
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "matchSegue" {
-            let controller = segue.destinationViewController as MatchViewController
+            let controller = segue.destinationViewController as! MatchViewController
             controller.player = player
             controller.others = others
             controller.central = centralManager

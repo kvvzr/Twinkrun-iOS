@@ -1,3 +1,5 @@
+
+
 //
 //  TWRGame.swift
 //  Twinkrun
@@ -81,8 +83,8 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
             delegate?.didStartGame()
             
             startTime = NSDate()
-            var current = UInt(NSDate().timeIntervalSinceDate(startTime!))
-            var currentRole = player.currentRole(current)
+            let current = UInt(NSDate().timeIntervalSinceDate(startTime!))
+            let currentRole = player.currentRole(current)
             
             delegate?.didUpdateRole(currentRole.color, score: score)
             
@@ -102,9 +104,9 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
     }
     
     func updateRole(timer: NSTimer?) {
-        var current = UInt(NSDate().timeIntervalSinceDate(startTime!))
-        var prevRole = player.previousRole(current)
-        var currentRole = player.currentRole(current)
+        let current = UInt(NSDate().timeIntervalSinceDate(startTime!))
+        let prevRole = player.previousRole(current)
+        let currentRole = player.currentRole(current)
         
         if let prevRole = prevRole {
             transition! += [(role: prevRole, scores: currentTransition!)]
@@ -137,8 +139,8 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
     
     func flash(timer: NSTimer) {
         if (flashCount < option.flashCount) {
-            var current = UInt(NSDate().timeIntervalSinceDate(startTime!))
-            var nextRole = player.nextRole(current)
+            let current = UInt(NSDate().timeIntervalSinceDate(startTime!))
+            let nextRole = player.nextRole(current)
             if (nextRole == nil) {
                 return
             }
@@ -152,8 +154,8 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
     
     func end() {
         if let startTime = startTime {
-            var current = UInt(NSDate().timeIntervalSinceDate(startTime))
-            var prevRole = player.previousRole(current)!
+            let current = UInt(NSDate().timeIntervalSinceDate(startTime))
+            let prevRole = player.previousRole(current)!
             
             transition! += [(role: prevRole, scores: currentTransition!)]
             
@@ -188,17 +190,17 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
         delegate?.didEndGame()
     }
     
-    func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
+    func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
         if let localName = advertisementData["kCBAdvDataLocalName"] as AnyObject? as? String {
             if let startTime = startTime {
-                var current = UInt(NSDate().timeIntervalSinceDate(startTime))
-                var findPlayer = TWRPlayer(advertisementDataLocalName: localName, identifier: peripheral.identifier)
+                let current = UInt(NSDate().timeIntervalSinceDate(startTime))
+                let findPlayer = TWRPlayer(advertisementDataLocalName: localName, identifier: peripheral.identifier)
                 
-                var other = others.filter { $0 == findPlayer }
+                let other = others.filter { $0 == findPlayer }
                 if !other.isEmpty {
                     other.first!.RSSI = RSSI.integerValue
                     if other.first!.playWith && !other.first!.countedScore && RSSI.integerValue <= 0 {
-                        var point = min(pow(2, (RSSI.floatValue + 45) / 4), 3.0)
+                        let point = min(pow(2, (RSSI.floatValue + 45) / 4), 3.0)
                         addScore -= Int(point * player.currentRole(current).score)
                         addScore += Int(point * other.first!.currentRole(current).score)
                         other.first!.countedScore = true
@@ -208,9 +210,9 @@ class TWRGame: NSObject, CBCentralManagerDelegate, CBPeripheralManagerDelegate {
         }
     }
     
-    func centralManagerDidUpdateState(central: CBCentralManager!) {
+    func centralManagerDidUpdateState(central: CBCentralManager) {
     }
     
-    func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager!) {
+    func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager) {
     }
 }

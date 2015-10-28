@@ -22,7 +22,7 @@ class TwinkrunTests: XCTestCase {
     }
     
     func testOption() {
-        var option = TWROption.sharedInstance
+        let option = TWROption.sharedInstance
         option.playerName = "WAIWAI"
         
         XCTAssert(TWROption.sharedInstance.playerName == "WAIWAI")

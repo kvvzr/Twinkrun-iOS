@@ -28,7 +28,7 @@ class MatchViewController: UIViewController, TWRGameDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var swipe = UISwipeGestureRecognizer(target: self, action: Selector("backToPlayerSelect"))
+        let swipe = UISwipeGestureRecognizer(target: self, action: Selector("backToPlayerSelect"))
         swipe.direction = UISwipeGestureRecognizerDirection.Right
         view.addGestureRecognizer(swipe)
         
@@ -134,7 +134,7 @@ class MatchViewController: UIViewController, TWRGameDelegate {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "resultSegue" {
-            let controller = segue.destinationViewController as ResultViewController
+            let controller = segue.destinationViewController as! ResultViewController
             player!.score = game!.score
             controller.result = TWRResult(player: player!, others: others!, scores: game!.transition!, score: game!.score)
         }
